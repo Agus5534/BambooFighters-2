@@ -1,0 +1,11 @@
+name: BambooFighters2
+version: '${version}'
+main: io.github.agus5534.bamboofightersv2.BambooFighters
+api-version: 1.19
+prefix: BF
+authors: [ Agus5534 ]
+description: Plugin para BambooFighters 2
+commands:
+  selectclass:
+  startcombat:
+  createteam:
