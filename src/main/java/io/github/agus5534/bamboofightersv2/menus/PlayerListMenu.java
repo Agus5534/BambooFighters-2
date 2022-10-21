@@ -5,7 +5,6 @@ import io.github.agus5534.utils.items.ItemCreator;
 import io.github.agus5534.utils.scoreboard.MainScoreboard;
 import io.github.agus5534.utils.text.ComponentManager;
 import io.github.agus5534.utils.text.MiniColor;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,8 +15,6 @@ import team.unnamed.gui.menu.item.ItemClickable;
 import team.unnamed.gui.menu.type.MenuInventory;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 public class PlayerListMenu {
     private ItemStack borderItem;

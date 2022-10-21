@@ -1,9 +1,7 @@
 package io.github.agus5534.bamboofightersv2.listeners.entity;
 
 import io.github.agus5534.utils.text.TranslatableText;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;

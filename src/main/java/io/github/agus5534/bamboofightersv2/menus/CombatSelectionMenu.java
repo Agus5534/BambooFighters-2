@@ -8,19 +8,13 @@ import io.github.agus5534.utils.items.ItemCreator;
 import io.github.agus5534.utils.text.TranslatableText;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import team.unnamed.gui.item.ItemBuilder;
-import team.unnamed.gui.item.SkullItemBuilder;
-import team.unnamed.gui.item.skull.SkullSkin;
 import team.unnamed.gui.menu.item.ItemClickable;
 import team.unnamed.gui.menu.type.MenuInventory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CombatSelectionMenu {

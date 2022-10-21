@@ -1,7 +1,6 @@
 package io.github.agus5534.bamboofightersv2;
 
 import io.github.agus5534.bamboofightersv2.classes.GameClass;
-import io.github.agus5534.bamboofightersv2.classes.list.DevClass;
 import io.github.agus5534.bamboofightersv2.classes.list.legacy.LegacyHealerClass;
 import io.github.agus5534.bamboofightersv2.commands.ClassSelectorCommand;
 import io.github.agus5534.bamboofightersv2.commands.CombatCommand;
@@ -24,15 +23,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import team.unnamed.bukkit.ServerVersion;
 import team.unnamed.gui.menu.listener.InventoryClickListener;
-import team.unnamed.gui.menu.listener.InventoryCloseListener;
 import team.unnamed.gui.menu.listener.InventoryOpenListener;
+import team.unnamed.gui.menu.v1_19_R1.MenuInventoryWrapperImpl;
 
 import java.lang.instrument.IllegalClassFormatException;
-import java.util.*;
-
-import team.unnamed.gui.menu.v1_19_R1.MenuInventoryWrapperImpl;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public final class BambooFighters extends JavaPlugin {
 

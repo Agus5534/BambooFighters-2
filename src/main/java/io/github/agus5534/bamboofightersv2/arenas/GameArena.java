@@ -1,8 +1,6 @@
 package io.github.agus5534.bamboofightersv2.arenas;
 
-import io.github.agus5534.utils.text.MiniColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 

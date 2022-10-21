@@ -13,8 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import team.unnamed.gui.menu.item.ItemClickable;
 import team.unnamed.gui.menu.type.MenuInventory;
 
-import java.util.ArrayList;
-
 public class ClassSelectionMenu {
 
     BambooFighters plugin;

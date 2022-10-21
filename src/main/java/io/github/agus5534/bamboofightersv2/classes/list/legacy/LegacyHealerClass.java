@@ -7,7 +7,6 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
-import team.unnamed.gui.item.ItemBuilder;
 
 public class LegacyHealerClass extends GameClass {
 

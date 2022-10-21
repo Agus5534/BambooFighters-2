@@ -6,11 +6,7 @@ import io.github.agus5534.utils.command.CommandConstructor;
 import io.github.agus5534.utils.command.annotations.utils.RequiresPlayerArgument;
 import io.github.agus5534.utils.text.TranslatableText;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
-
-import java.util.Collection;
-import java.util.Collections;
 
 @RequiresPlayerArgument
 public class CreateTeamCommand extends CommandConstructor {
