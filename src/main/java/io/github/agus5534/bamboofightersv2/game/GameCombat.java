@@ -3,6 +3,8 @@ package io.github.agus5534.bamboofightersv2.game;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.arenas.GameArena;
 import io.github.agus5534.bamboofightersv2.team.GameTeam;
+import io.github.agus5534.utils.text.ComponentManager;
+import io.github.agus5534.utils.text.MiniColor;
 import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
@@ -25,9 +27,11 @@ public class GameCombat {
     private final GameArena gameArena;
     private final GameTeam team1;
     private final GameTeam team2;
-    private int team1Score, team2Score, mainTask, countdownTask,timerMins, timerSecs;
+    private int team1Score, team2Score, mainTask, countdownTask, timerMins, timerSecs;
     private long ticks = 6000;
     private GameArena lobby;
+
+    private String combatTabFooter;
 
     public GameCombat(JavaPlugin plugin, GameArena gameArena, GameTeam team1, GameTeam team2) {
         this.plugin = plugin;
@@ -41,6 +45,16 @@ public class GameCombat {
         Bukkit.getScheduler().runTask(plugin, ()-> preStartCombat());
 
         Bukkit.getScheduler().runTaskLater(plugin, ()-> startCombat(), 600L);
+
+        combatTabFooter = MiniColor.format(
+                "\n%bold%%s %yellow%%d %white%- %yellow%%d %reset% %s%s",
+                team1.getTeam().color(),
+                team1.getName(),
+                team1Score,
+                team2Score,
+                team2.getTeam().color(),
+                team2.getName()
+        );
 
         //TODO set Lobby ARENA
         lobby = GameArena.DEV_ARENA;
@@ -121,7 +135,11 @@ public class GameCombat {
         if(getAlive(team1) == 0) {
 
             Bukkit.getScheduler().cancelTask(mainTask);
+
             incrementTeam2Score();
+
+            updateTabFooter();
+
             if(team2Score < 2) {
                 Bukkit.broadcast(TranslatableText.basicTranslate("game.combat.round_winner",team2.getName(), String.valueOf(team1Score+team2Score+1)));
                 Bukkit.getScheduler().runTaskLater(plugin, ()->startCombat(),200L);
@@ -136,6 +154,8 @@ public class GameCombat {
             Bukkit.getScheduler().cancelTask(mainTask);
 
             incrementTeam1Score();
+
+            updateTabFooter();
 
             if(team1Score < 2) {
                 Bukkit.broadcast(TranslatableText.basicTranslate("game.combat.round_winner",team1.getName(), String.valueOf(team1Score+team2Score+1)));
@@ -168,6 +188,8 @@ public class GameCombat {
     }
 
     private void endGame(GameTeam winner, GameTeam loser) {
+        combatTabFooter = "";
+        updateTabFooter();
         Bukkit.broadcast(TranslatableText.basicTranslate("game.combat_winner",winner.getName()));
 
         winner.getMembers().stream().filter(p -> p.isOnline()).forEach(p -> p.showTitle(Title.title(TranslatableText.basicTranslate("game.combat.title_win"), Component.text(""))));
@@ -207,5 +229,13 @@ public class GameCombat {
                 .forEach(p -> d.updateAndGet(v -> new Double((double) (v + p.getHealth()))));
 
         return d.get();
+    }
+
+    private void updateTabFooter() {
+        Bukkit.getOnlinePlayers().forEach(p -> {
+            p.sendPlayerListFooter(
+                    ComponentManager.formatMiniMessage(combatTabFooter)
+            );
+        });
     }
 }
