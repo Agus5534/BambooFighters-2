@@ -13,6 +13,8 @@ import io.github.agus5534.bamboofightersv2.listeners.player.PlayerGameBasicsList
 import io.github.agus5534.bamboofightersv2.listeners.player.PlayerJoinListener;
 import io.github.agus5534.bamboofightersv2.team.GameTeam;
 import io.github.agus5534.bamboofightersv2.team.PlayerSelection;
+import io.github.agus5534.bamboofightersv2.utils.ResourcePackUpdateChecker;
+import io.github.agus5534.bamboofightersv2.utils.item.InteractionManager;
 import io.github.agus5534.utils.command.CommandRegisterer;
 import io.github.agus5534.utils.scoreboard.MainScoreboard;
 import io.github.agus5534.utils.text.ComponentManager;
@@ -27,7 +29,9 @@ import team.unnamed.gui.menu.listener.InventoryClickListener;
 import team.unnamed.gui.menu.listener.InventoryOpenListener;
 import team.unnamed.gui.menu.v1_19_R1.MenuInventoryWrapperImpl;
 
+import java.io.IOException;
 import java.lang.instrument.IllegalClassFormatException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,6 +39,7 @@ import java.util.List;
 
 public final class BambooFighters extends JavaPlugin {
 
+    public static BambooFighters instance;
     public List<GameClass> gameClasses = new ArrayList<>();
 
     public static List<GameClass> staticGameClass = new ArrayList<>();
@@ -54,6 +59,7 @@ public final class BambooFighters extends JavaPlugin {
     private List<NamedTextColor> colors;
     @Override
     public void onEnable() {
+        instance = this;
         playerGameTeamHashMap = new HashMap<>();
         gameTeams = new ArrayList<>();
         new MainScoreboard();
@@ -65,7 +71,8 @@ public final class BambooFighters extends JavaPlugin {
                 new PlayerGameBasicsListener(),
                 new EntityDamageListener(),
                 new BlockListener(),
-                new PlayerJoinListener()
+                new PlayerJoinListener(),
+                new InteractionManager()
         );
 
         registerClasses(new LegacyHealerClass(this));
@@ -103,6 +110,15 @@ public final class BambooFighters extends JavaPlugin {
         };
 
         Arrays.asList(textColors).forEach(namedTextColor -> colors.add(namedTextColor));
+        ResourcePackUpdateChecker resourcePackUpdateChecker = new ResourcePackUpdateChecker();
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ()-> {
+            try {
+                resourcePackUpdateChecker.update();
+            } catch (IOException | NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+        }, 12000L, 12000L);
     }
 
     @Override
