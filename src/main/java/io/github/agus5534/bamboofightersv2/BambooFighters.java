@@ -10,6 +10,7 @@ import io.github.agus5534.bamboofightersv2.listeners.ExtraListener;
 import io.github.agus5534.bamboofightersv2.listeners.block.BlockListener;
 import io.github.agus5534.bamboofightersv2.listeners.entity.EntityDamageListener;
 import io.github.agus5534.bamboofightersv2.listeners.player.PlayerGameBasicsListener;
+import io.github.agus5534.bamboofightersv2.listeners.player.PlayerInteractListener;
 import io.github.agus5534.bamboofightersv2.listeners.player.PlayerJoinListener;
 import io.github.agus5534.bamboofightersv2.team.GameTeam;
 import io.github.agus5534.bamboofightersv2.team.PlayerSelection;
@@ -72,7 +73,8 @@ public final class BambooFighters extends JavaPlugin {
                 new EntityDamageListener(),
                 new BlockListener(),
                 new PlayerJoinListener(),
-                new InteractionManager()
+                new InteractionManager(),
+                new PlayerInteractListener()
         );
 
         registerClasses(new LegacyHealerClass(this));
