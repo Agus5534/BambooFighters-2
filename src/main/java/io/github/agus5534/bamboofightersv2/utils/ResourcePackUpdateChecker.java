@@ -37,7 +37,7 @@ public class ResourcePackUpdateChecker {
             return;
         }
 
-        Bukkit.broadcast(ComponentManager.formatMiniMessage("<red>Se ha encontrado una nueva versión del Resource Pack!</red><gold>Reinicie el servidor para actualizar.</gold>"));
+        Bukkit.broadcast(ComponentManager.formatMiniMessage("<red>Se ha encontrado una nueva versión del Resource Pack!</red> <gold>Reinicie el servidor para actualizar.</gold>"));
     }
 
     private String sha1Code(String fileUrl) throws IOException, NoSuchAlgorithmException {
