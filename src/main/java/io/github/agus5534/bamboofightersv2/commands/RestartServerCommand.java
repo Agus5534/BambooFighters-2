@@ -34,6 +34,8 @@ public class RestartServerCommand extends CommandConstructor {
         try {
             Integer i = Integer.parseInt(args[0]);
             AtomicInteger ticks = new AtomicInteger();
+
+            ticks.set(i);
             if(i > 6000 || i < 600) {
                 sender.sendMessage("No se permite mas de 5 minutos.");
                 return;
@@ -51,14 +53,16 @@ public class RestartServerCommand extends CommandConstructor {
             }, i);
 
             tskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, ()->{
-                ticks.getAndIncrement();
+                ticks.getAndDecrement();
 
                 long seconds = ticks.get() / 20;
 
                 int timerMins = (int) seconds / 60;
                 int timerSecs = (int) seconds % 60;
 
-                Bukkit.getOnlinePlayers().forEach(p -> p.sendActionBar(TranslatableText.basicTranslate("warn.server_restarts", String.format("%02d:%02d", timerMins, timerSecs))));
+                String restartMins = String.format("%02d", timerMins);
+                String restartSeconds = String.format("%02d", timerSecs);
+                Bukkit.getOnlinePlayers().forEach(p -> p.sendActionBar(TranslatableText.basicTranslate("warn.server_restarts", restartMins, restartSeconds)));
             }, 1L, 1L);
         } catch (Exception e) {
             return;

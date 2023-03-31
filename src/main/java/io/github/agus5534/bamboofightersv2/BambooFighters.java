@@ -21,7 +21,9 @@ import io.github.agus5534.utils.command.CommandRegisterer;
 import io.github.agus5534.utils.scoreboard.MainScoreboard;
 import io.github.agus5534.utils.text.ComponentManager;
 import io.github.agus5534.utils.text.MiniColor;
+import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -56,7 +58,7 @@ public final class BambooFighters extends JavaPlugin {
 
     private MenuInventoryWrapperImpl MenuInventoryWrapperImpl;
 
-    public static final Component tabHeader = ComponentManager.formatMiniMessage(MiniColor.GREEN + "丈 " + MiniColor.DARK_GRAY + "Bamboo" + MiniColor.WHITE + "Fighters" + MiniColor.GREEN + " 丈");
+    public static final Component tabHeader = TranslatableText.basicTranslate("game.player_list_title");
 
     private List<NamedTextColor> colors;
     @Override
