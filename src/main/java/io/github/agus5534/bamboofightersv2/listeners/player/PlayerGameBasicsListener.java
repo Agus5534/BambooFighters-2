@@ -32,12 +32,15 @@ public class PlayerGameBasicsListener implements Listener {
     }
 
     @EventHandler
-    public void onTake(PlayerTakeLecternBookEvent event){
+    public void onTake(PlayerTakeLecternBookEvent event) {
+        if(event.getPlayer().getGameMode() == GameMode.CREATIVE) { return; }
         event.setCancelled(true);
     }
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event){
+        if(event.getPlayer().getGameMode() == GameMode.CREATIVE) { return; }
+
         if(event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getPlayer().getGameMode() == GameMode.SURVIVAL) {
             if(event.getPlayer().getInventory().getItemInMainHand() != null) {
                 if(event.getPlayer().getInventory().getItemInMainHand().getType().isBlock()) {

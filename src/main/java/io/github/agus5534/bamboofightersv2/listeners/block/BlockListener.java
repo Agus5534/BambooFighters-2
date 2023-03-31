@@ -11,6 +11,8 @@ public class BlockListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        if(event.getPlayer().getGameMode() == GameMode.CREATIVE) { return; }
+
         if(event.getBlock().getType() != Material.WHITE_WOOL && event.getPlayer().getGameMode() == GameMode.SURVIVAL) {
             if(event.getBlock().getType() != Material.FIRE) {
                 event.setCancelled(true);
@@ -20,6 +22,8 @@ public class BlockListener implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
+        if(event.getPlayer().getGameMode() == GameMode.CREATIVE) { return; }
+
         var b = event.getBlock();
         var bType = b.getType();
 
