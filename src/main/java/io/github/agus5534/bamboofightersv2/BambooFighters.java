@@ -5,6 +5,7 @@ import io.github.agus5534.bamboofightersv2.classes.list.legacy.LegacyHealerClass
 import io.github.agus5534.bamboofightersv2.commands.ClassSelectorCommand;
 import io.github.agus5534.bamboofightersv2.commands.CombatCommand;
 import io.github.agus5534.bamboofightersv2.commands.CreateTeamCommand;
+import io.github.agus5534.bamboofightersv2.commands.RestartServerCommand;
 import io.github.agus5534.bamboofightersv2.game.GameCombat;
 import io.github.agus5534.bamboofightersv2.listeners.ExtraListener;
 import io.github.agus5534.bamboofightersv2.listeners.block.BlockListener;
@@ -55,7 +56,7 @@ public final class BambooFighters extends JavaPlugin {
 
     private MenuInventoryWrapperImpl MenuInventoryWrapperImpl;
 
-    public static final Component tabHeader = ComponentManager.formatMiniMessage(MiniColor.BLACK + "Bamboo" + MiniColor.WHITE + "Fighters");
+    public static final Component tabHeader = ComponentManager.formatMiniMessage(MiniColor.GREEN + "丈 " + MiniColor.DARK_GRAY + "Bamboo" + MiniColor.WHITE + "Fighters" + MiniColor.GREEN + " 丈");
 
     private List<NamedTextColor> colors;
     @Override
@@ -87,7 +88,8 @@ public final class BambooFighters extends JavaPlugin {
             commandRegisterer.setCommandConstructors(
                     new ClassSelectorCommand(this),
                     new CombatCommand(this),
-                    new CreateTeamCommand(this)
+                    new CreateTeamCommand(this),
+                    new RestartServerCommand(this)
             );
         } catch (IllegalClassFormatException e) {
             throw new RuntimeException(e);

@@ -9,3 +9,4 @@ commands:
   selectclass:
   startcombat:
   createteam:
+  restartserver:
