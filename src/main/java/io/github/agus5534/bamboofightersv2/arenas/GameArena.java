@@ -5,11 +5,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 
 public enum GameArena {
-    DEV_ARENA(
-            new Location(Bukkit.getWorlds().get(0), 0, 100, 0),
-            new Location(Bukkit.getWorlds().get(0), 0, 100, 0),
-            new Location(Bukkit.getWorlds().get(0), 0, 100, 0),
-            "DEV ARENA",
+    LOBBY(
+            new Location(Bukkit.getWorlds().get(0), -1, 31, 5),
+            new Location(Bukkit.getWorlds().get(0), -1, 31, 5),
+            new Location(Bukkit.getWorlds().get(0), -1, 31, 5),
+            "LOBBY",
             Material.STRUCTURE_VOID
     );
 

@@ -1,6 +1,7 @@
 package io.github.agus5534.bamboofightersv2;
 
 import io.github.agus5534.bamboofightersv2.classes.GameClass;
+import io.github.agus5534.bamboofightersv2.classes.list.Vanguardia;
 import io.github.agus5534.bamboofightersv2.classes.list.legacy.LegacyHealerClass;
 import io.github.agus5534.bamboofightersv2.commands.ClassSelectorCommand;
 import io.github.agus5534.bamboofightersv2.commands.CombatCommand;
@@ -80,7 +81,7 @@ public final class BambooFighters extends JavaPlugin {
                 new PlayerInteractListener()
         );
 
-        registerClasses(new LegacyHealerClass(this));
+        registerClasses(new Vanguardia());
 
         commandRegisterer = new CommandRegisterer(this);
 

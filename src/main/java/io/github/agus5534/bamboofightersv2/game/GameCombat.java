@@ -13,10 +13,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.GameRule;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -30,6 +33,7 @@ public class GameCombat {
     private int team1Score, team2Score, mainTask, countdownTask, timerMins, timerSecs;
     private long ticks = 6000;
     private GameArena lobby;
+    private List<Player> ultimateUsed;
 
     private String combatTabFooter;
 
@@ -38,6 +42,7 @@ public class GameCombat {
         this.gameArena = gameArena;
         this.team1 = team1;
         this.team2 = team2;
+        this.ultimateUsed = new ArrayList<>();
 
         team1Score = 0;
         team2Score = 0;
@@ -57,7 +62,7 @@ public class GameCombat {
         );
 
         //TODO set Lobby ARENA
-        lobby = GameArena.DEV_ARENA;
+        lobby = GameArena.LOBBY;
     }
 
     public void incrementTeam1Score() { ++this.team1Score; }
@@ -229,6 +234,14 @@ public class GameCombat {
                 .forEach(p -> d.updateAndGet(v -> new Double((double) (v + p.getHealth()))));
 
         return d.get();
+    }
+
+    public boolean hasUsedUltimate(Player player) {
+        return this.ultimateUsed.contains(player);
+    }
+
+    public void playerJustUsedUltimate(Player player) {
+        this.ultimateUsed.add(player);
     }
 
     private void updateTabFooter() {
