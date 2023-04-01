@@ -11,8 +11,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Vanguardia extends GameClass {
-    public Vanguardia() {
+public class VanguardiaClass extends GameClass {
+    public VanguardiaClass() {
         super(BambooFighters.instance, "Vanguardia", Material.IRON_CHESTPLATE);
     }
     private String HELMET = TranslatableText.basicTranslateString("class.vanguardia.item_helmet");
