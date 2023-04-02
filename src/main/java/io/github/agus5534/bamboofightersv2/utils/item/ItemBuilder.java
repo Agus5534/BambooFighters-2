@@ -74,6 +74,13 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder setDisplayName(Component component) {
+        this.im = this.is.getItemMeta();
+        this.im.displayName(component);
+        this.is.setItemMeta(this.im);
+        return this;
+    }
+
     public ItemBuilder addEnchant(Enchantment enchantment, int level) {
         this.im = this.is.getItemMeta();
         if (this.im instanceof EnchantmentStorageMeta) {

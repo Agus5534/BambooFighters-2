@@ -21,6 +21,8 @@ public class VanguardiaClass extends GameClass {
     private Component LEGGINGS = TranslatableText.basicTranslate("class.vanguardia.item_leggings");
     private Component BOOTS = TranslatableText.basicTranslate("class.vanguardia.item_boots");
     private Component WEAPON = TranslatableText.basicTranslate("class.vanguardia.item_weapon");
+    private Component ULTIMATE = TranslatableText.basicTranslate("class.vanguardia.item_ultimate");
+    private Component SHIELD = TranslatableText.basicTranslate("class.vanguardia.item_shield");
 
     @Override
     protected void setItems(JavaPlugin plugin) {
@@ -31,8 +33,8 @@ public class VanguardiaClass extends GameClass {
         classItem.put(37, new ItemCreator(Material.IRON_LEGGINGS).name(LEGGINGS).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true));
         classItem.put(36, new ItemCreator(Material.IRON_BOOTS).name(BOOTS).enchants(Enchantment.PROTECTION_PROJECTILE, 1).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true));
         classItem.put(0, new ItemCreator(Material.WOODEN_SWORD).name(WEAPON).setUnbreakable(true));
-        classItem.put(40, new ItemCreator(Material.SHIELD)); //TODO Shield Usages
-        classItem.put(2, new ItemBuilder(Material.STICK).setDisplayName("Ultimate").onConsumeRightClick("vanguardia_ultimate", event -> {
+        classItem.put(40, new ItemCreator(Material.SHIELD).name(SHIELD)); //TODO Shield Usages
+        classItem.put(2, new ItemBuilder(Material.BLAZE_ROD).setDisplayName(ULTIMATE).onConsumeRightClick("vanguardia_ultimate", event -> {
             var combat = BambooFighters.getActualGameCombat();
             if(combat == null) { return; }
 
