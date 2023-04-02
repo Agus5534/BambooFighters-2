@@ -36,8 +36,8 @@ public class RestartServerCommand extends CommandConstructor {
             AtomicInteger ticks = new AtomicInteger();
 
             ticks.set(i);
-            if(i > 6000 || i < 600) {
-                sender.sendMessage("No se permite mas de 5 minutos.");
+            if(i > 24000 || i < 1200) {
+                sender.sendMessage("No se permite mas de 20 minutos.");
                 return;
             }
 

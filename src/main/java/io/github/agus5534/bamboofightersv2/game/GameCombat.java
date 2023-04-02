@@ -92,14 +92,14 @@ public class GameCombat {
 
         Bukkit.broadcast(TranslatableText.basicTranslate("game.combat_starting",team1.getName(),team2.getName()));
         mainTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, ()->gameTask(),1L,1L);
-        gameArena.getTeam1Loc().getWorld().setPVP(true);
+        gameArena.getTeam1Region().getRandomLocation().getWorld().setPVP(true);
     }
 
     private void preStartCombat() {
         teleportPlayers();
         Bukkit.broadcast(TranslatableText.basicTranslate("game.combat.pre_starting"));
-        gameArena.getTeam1Loc().getWorld().setPVP(false);
-        gameArena.getTeam1Loc().getWorld().setGameRule(GameRule.NATURAL_REGENERATION, false);
+        gameArena.getTeam1Region().getRandomLocation().getWorld().setPVP(false);
+        gameArena.getTeam1Region().getRandomLocation().getWorld().setGameRule(GameRule.NATURAL_REGENERATION, false);
         Bukkit.getOnlinePlayers().forEach(p -> p.setGameMode(GameMode.SPECTATOR));
     }
 
@@ -173,15 +173,15 @@ public class GameCombat {
     }
 
     private void teleportPlayers() {
-        team1.getMembers().stream().filter(p -> p.isOnline()).forEach(p -> p.teleport(gameArena.getTeam1Loc()));
-        team2.getMembers().stream().filter(p -> p.isOnline()).forEach(p -> p.teleport(gameArena.getTeam2Loc()));
+        team1.getMembers().stream().filter(p -> p.isOnline()).forEach(p -> p.teleport(gameArena.getTeam1Region().getRandomLocation()));
+        team2.getMembers().stream().filter(p -> p.isOnline()).forEach(p -> p.teleport(gameArena.getTeam2Region().getRandomLocation()));
 
         Bukkit.getOnlinePlayers().forEach(p -> {
             var t = BambooFighters.playerGameTeamHashMap.get(p);
 
             if(t.equals(team1) || t.equals(team2)) { return; }
 
-            p.teleport(gameArena.getSpectLoc());
+            p.teleport(gameArena.getCenterLoc());
         });
     }
 
@@ -207,7 +207,7 @@ public class GameCombat {
             player.getInventory().clear();
             player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
             player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 200, 10));
-            player.teleport(lobby.getSpectLoc());
+            player.teleport(lobby.getCenterLoc());
         }),200L);
     }
 

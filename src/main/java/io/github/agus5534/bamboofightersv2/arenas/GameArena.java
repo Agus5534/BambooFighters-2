@@ -1,40 +1,47 @@
 package io.github.agus5534.bamboofightersv2.arenas;
 
+import io.github.agus5534.bamboofightersv2.utils.LocationUtil;
+import io.github.agus5534.bamboofightersv2.utils.Region;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
 public enum GameArena {
     LOBBY(
-            new Location(Bukkit.getWorlds().get(0), -1, 31, 5),
-            new Location(Bukkit.getWorlds().get(0), -1, 31, 5),
-            new Location(Bukkit.getWorlds().get(0), -1, 31, 5),
+            new Region(
+                    LocationUtil.of("", "")
+            ),
+            new Region(
+                    LocationUtil.of("", "")
+            ),
+            LocationUtil.of(""),
             "LOBBY",
             Material.STRUCTURE_VOID
     );
 
     private final String arenaName;
-    private final Location team1Loc, team2Loc, spectLoc;
+    private final Region team1Region, team2Region;
+    private final Location centerLoc;
     private final Material arenaIcon;
 
-    GameArena(Location team1Loc, Location team2Loc, Location spectLoc, String arenaName, Material arenaIcon) {
-        this.team1Loc = team1Loc;
-        this.team2Loc = team2Loc;
-        this.spectLoc = spectLoc;
+    GameArena(Region team1Region, Region team2Region, Location centerLoc, String arenaName, Material arenaIcon) {
+        this.team1Region = team1Region;
+        this.team2Region = team2Region;
+        this.centerLoc = centerLoc;
         this.arenaName = arenaName;
         this.arenaIcon = arenaIcon;
     }
 
-    public Location getTeam1Loc() {
-        return team1Loc;
+    public Region getTeam1Region() {
+        return team1Region;
     }
 
-    public Location getTeam2Loc() {
-        return team2Loc;
+    public Region getTeam2Region() {
+        return team2Region;
     }
 
-    public Location getSpectLoc() {
-        return spectLoc;
+    public Location getCenterLoc() {
+        return centerLoc;
     }
 
     public Material getArenaIcon() {

@@ -5,6 +5,7 @@ import io.github.agus5534.bamboofightersv2.classes.GameClass;
 import io.github.agus5534.bamboofightersv2.utils.item.ItemBuilder;
 import io.github.agus5534.utils.items.ItemCreator;
 import io.github.agus5534.utils.text.TranslatableText;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,11 +16,11 @@ public class VanguardiaClass extends GameClass {
     public VanguardiaClass() {
         super(BambooFighters.instance, "Vanguardia", Material.IRON_CHESTPLATE);
     }
-    private String HELMET = TranslatableText.basicTranslateString("class.vanguardia.item_helmet");
-    private String CHESTPLATE = TranslatableText.basicTranslateString("class.vanguardia.item_chestplate");
-    private String LEGGINGS = TranslatableText.basicTranslateString("class.vanguardia.item_leggings");
-    private String BOOTS = TranslatableText.basicTranslateString("class.vanguardia.item_boots");
-    private String WEAPON = TranslatableText.basicTranslateString("class.vanguardia.item_weapon");
+    private Component HELMET = TranslatableText.basicTranslate("class.vanguardia.item_helmet");
+    private Component CHESTPLATE = TranslatableText.basicTranslate("class.vanguardia.item_chestplate");
+    private Component LEGGINGS = TranslatableText.basicTranslate("class.vanguardia.item_leggings");
+    private Component BOOTS = TranslatableText.basicTranslate("class.vanguardia.item_boots");
+    private Component WEAPON = TranslatableText.basicTranslate("class.vanguardia.item_weapon");
 
     @Override
     protected void setItems(JavaPlugin plugin) {
