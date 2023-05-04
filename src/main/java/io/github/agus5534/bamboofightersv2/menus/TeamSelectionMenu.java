@@ -2,9 +2,8 @@ package io.github.agus5534.bamboofightersv2.menus;
 
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.team.PlayerSelection;
+import io.github.agus5534.bamboofightersv2.utils.location.OvniAnimation;
 import io.github.agus5534.utils.items.ItemCreator;
-import io.github.agus5534.utils.text.TranslatableText;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -28,14 +27,13 @@ public class TeamSelectionMenu {
                     if(!(event.getWhoClicked() instanceof Player)) { return true; }
 
                     var p = (Player)event.getWhoClicked();
-                    playerSelection.setHasSelected(true);
+
+                    playerSelection.a = true;
                     p.closeInventory();
 
                     var team = BambooFighters.playerGameTeamHashMap.get(playerSelection.getToSelect());
 
-                    team.addMember(player);
-
-                    Bukkit.broadcast(TranslatableText.basicTranslate("team.selection.player_selected",p.getName(),player.getName()));
+                    new OvniAnimation(player, team, playerSelection);
 
                     return true;
                 }).build())

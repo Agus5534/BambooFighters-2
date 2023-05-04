@@ -85,6 +85,7 @@ public class InteractionManager implements Listener {
         if(player.getInventory().getItemInMainHand() == null) { return; }
 
         var item = player.getInventory().getItemInMainHand();
+        if(item.getItemMeta() == null) { return; }
         var data = item.getItemMeta().getPersistentDataContainer();
 
         interactableItems.keySet().forEach(key -> {

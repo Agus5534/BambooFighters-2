@@ -8,10 +8,7 @@ import io.github.agus5534.utils.text.MiniColor;
 import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.GameRule;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,71 +16,83 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 @SuppressWarnings("all")
 public class GameCombat {
 
     private final JavaPlugin plugin;
-    private final GameArena gameArena;
+    private final List<GameArena> gameArenas;
     private final GameTeam team1;
     private final GameTeam team2;
     private int team1Score, team2Score, mainTask, countdownTask, timerMins, timerSecs;
+    private final WorldBorder worldBorder;
     private long ticks = 6000;
     private GameArena lobby;
     private List<Player> ultimateUsed;
+    private GameArena currentArena;
+    private boolean started;
 
-    private String combatTabFooter;
+    private Component combatTabFooter;
 
-    public GameCombat(JavaPlugin plugin, GameArena gameArena, GameTeam team1, GameTeam team2) {
+    public GameCombat(JavaPlugin plugin, List<GameArena> gameArenas, GameTeam team1, GameTeam team2) {
         this.plugin = plugin;
-        this.gameArena = gameArena;
+        this.gameArenas = gameArenas;
         this.team1 = team1;
         this.team2 = team2;
         this.ultimateUsed = new ArrayList<>();
+        this.worldBorder = Bukkit.getWorlds().get(0).getWorldBorder();
+        this.started = false;
 
         team1Score = 0;
         team2Score = 0;
+
+        Collections.shuffle(this.gameArenas);
+        this.currentArena = this.gameArenas.stream().findFirst().get();
+        this.gameArenas.remove(currentArena);
+
+        this.configureWorldBorder();
 
         Bukkit.getScheduler().runTask(plugin, ()-> preStartCombat());
 
         Bukkit.getScheduler().runTaskLater(plugin, ()-> startCombat(), 600L);
 
-        combatTabFooter = MiniColor.format(
-                "\n%bold%%s %yellow%%d %white%- %yellow%%d %reset% %s%s",
-                team1.getTeam().color(),
+        combatTabFooter = ComponentManager.formatMiniMessage(String.format("<bold>%s</bold> <yellow>%d</yellow>-<yellow>%d</yellow> <bold>%s</bold>",
                 team1.getName(),
                 team1Score,
                 team2Score,
-                team2.getTeam().color(),
-                team2.getName()
-        );
+                team2.getName()));
 
-        //TODO set Lobby ARENA
         lobby = GameArena.LOBBY;
+        this.updateTabFooter();
     }
 
     public void incrementTeam1Score() { ++this.team1Score; }
     public void incrementTeam2Score() { ++this.team2Score; }
 
     private void startCombat() {
+        this.started = true;
+        this.ultimateUsed.clear();
         ticks = 6000;
         timerMins = 0;
         timerSecs = 0;
         teleportPlayers();
+        this.configureWorldBorder();
 
         team1.getMembers().stream().filter(p -> p.isOnline()).forEach(p -> {
                     p.setGameMode(GameMode.SURVIVAL);
-                    p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
                     p.getActivePotionEffects().forEach(potionEffect -> p.removePotionEffect(potionEffect.getType()));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 10, 10, false, false, false));
                     p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 40, 100));
         });
         team2.getMembers().stream().filter(p -> p.isOnline()).forEach(p -> {
             p.setGameMode(GameMode.SURVIVAL);
-            p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
             p.getActivePotionEffects().forEach(potionEffect -> p.removePotionEffect(potionEffect.getType()));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 10, 10, false, false, false));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 40, 100));
         });
 
@@ -92,14 +101,16 @@ public class GameCombat {
 
         Bukkit.broadcast(TranslatableText.basicTranslate("game.combat_starting",team1.getName(),team2.getName()));
         mainTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, ()->gameTask(),1L,1L);
-        gameArena.getTeam1Region().getRandomLocation().getWorld().setPVP(true);
+        this.currentArena.getTeam1Region().getRandomLocation().getWorld().setPVP(true);
     }
 
     private void preStartCombat() {
+        this.started = false;
         teleportPlayers();
+        this.configureWorldBorder();
         Bukkit.broadcast(TranslatableText.basicTranslate("game.combat.pre_starting"));
-        gameArena.getTeam1Region().getRandomLocation().getWorld().setPVP(false);
-        gameArena.getTeam1Region().getRandomLocation().getWorld().setGameRule(GameRule.NATURAL_REGENERATION, false);
+        this.currentArena.getTeam1Region().getRandomLocation().getWorld().setPVP(false);
+        this.currentArena.getTeam1Region().getRandomLocation().getWorld().setGameRule(GameRule.NATURAL_REGENERATION, false);
         Bukkit.getOnlinePlayers().forEach(p -> p.setGameMode(GameMode.SPECTATOR));
     }
 
@@ -108,33 +119,8 @@ public class GameCombat {
             formatTimer();
         }
 
-        if(ticks <= 0) {
-            Bukkit.getScheduler().cancelTask(mainTask);
-
-            double t1 = Math.round(teamHealth(team1) * 100.0) / 100.0;
-            double t2 = Math.round(teamHealth(team2) * 100.0) / 100.0;
-
-            if(t2 == t1) {
-                double toAddOne = Math.round(ThreadLocalRandom.current().nextDouble(1,15) * 100.0) / 100.0;
-                double toAddTwo = Math.round(ThreadLocalRandom.current().nextDouble(1,15) * 100.0) / 100.0;
-
-                t1+=toAddOne;
-                t2+=toAddTwo;
-            }
-
-            if(t1 > t2) {
-                Bukkit.broadcast(TranslatableText.basicTranslate("game.combat.time_out",team1.getName(),String.valueOf(t1),team2.getName(),String.valueOf(t2)));
-                endGame(team1,team2);
-                return;
-            }
-
-            if(t2 > t1) {
-                Bukkit.broadcast(TranslatableText.basicTranslate("game.combat.time_out",team2.getName(),String.valueOf(t2),team1.getName(),String.valueOf(t1)));
-                endGame(team2,team1);
-                return;
-            }
-
-            return;
+        if(ticks == 600) {
+            worldBorder.setSize(20, TimeUnit.SECONDS, 30);
         }
 
         if(getAlive(team1) == 0) {
@@ -145,9 +131,14 @@ public class GameCombat {
 
             updateTabFooter();
 
+            currentArena.getSquaredRegion().getBlocksTypeOf(Material.WHITE_WOOL).forEach(b -> b.setType(Material.AIR));
+
             if(team2Score < 2) {
                 Bukkit.broadcast(TranslatableText.basicTranslate("game.combat.round_winner",team2.getName(), String.valueOf(team1Score+team2Score+1)));
-                Bukkit.getScheduler().runTaskLater(plugin, ()->startCombat(),200L);
+                this.currentArena = gameArenas.get(ThreadLocalRandom.current().nextInt(gameArenas.size()));
+                this.gameArenas.remove(currentArena);
+                Bukkit.getScheduler().runTaskLater(plugin, ()-> preStartCombat(),200L);
+                Bukkit.getScheduler().runTaskLater(plugin, ()-> startCombat(), 800L);
             } else {
                 endGame(team2, team1);
             }
@@ -162,9 +153,14 @@ public class GameCombat {
 
             updateTabFooter();
 
+            currentArena.getSquaredRegion().getBlocksTypeOf(Material.WHITE_WOOL).forEach(b -> b.setType(Material.AIR));
+
             if(team1Score < 2) {
                 Bukkit.broadcast(TranslatableText.basicTranslate("game.combat.round_winner",team1.getName(), String.valueOf(team1Score+team2Score+1)));
-                Bukkit.getScheduler().runTaskLater(plugin, ()->startCombat(),200L);
+                this.currentArena = gameArenas.get(ThreadLocalRandom.current().nextInt(gameArenas.size()));
+                this.gameArenas.remove(currentArena);
+                Bukkit.getScheduler().runTaskLater(plugin, ()-> preStartCombat(),200L);
+                Bukkit.getScheduler().runTaskLater(plugin, ()-> startCombat(), 800L);
             } else {
                 endGame(team1, team2);
             }
@@ -173,15 +169,16 @@ public class GameCombat {
     }
 
     private void teleportPlayers() {
-        team1.getMembers().stream().filter(p -> p.isOnline()).forEach(p -> p.teleport(gameArena.getTeam1Region().getRandomLocation()));
-        team2.getMembers().stream().filter(p -> p.isOnline()).forEach(p -> p.teleport(gameArena.getTeam2Region().getRandomLocation()));
+        team1.getMembers().stream().filter(p -> Bukkit.getOnlinePlayers().contains(p)).forEach(p -> p.teleport(this.currentArena.getTeam1Region().getRandomLocation()));
+        team2.getMembers().stream().filter(p -> Bukkit.getOnlinePlayers().contains(p)).forEach(p -> p.teleport(this.currentArena.getTeam2Region().getRandomLocation()));
 
         Bukkit.getOnlinePlayers().forEach(p -> {
             var t = BambooFighters.playerGameTeamHashMap.get(p);
+            if(t == null) { return; }
 
             if(t.equals(team1) || t.equals(team2)) { return; }
 
-            p.teleport(gameArena.getCenterLoc());
+            p.teleport(this.currentArena.getCenterLoc());
         });
     }
 
@@ -193,7 +190,7 @@ public class GameCombat {
     }
 
     private void endGame(GameTeam winner, GameTeam loser) {
-        combatTabFooter = "";
+        combatTabFooter = Component.text("");
         updateTabFooter();
         Bukkit.broadcast(TranslatableText.basicTranslate("game.combat_winner",winner.getName()));
 
@@ -205,10 +202,33 @@ public class GameCombat {
         Bukkit.getScheduler().runTaskLater(plugin, ()->Bukkit.getOnlinePlayers().forEach(player -> {
             player.setGameMode(GameMode.ADVENTURE);
             player.getInventory().clear();
-            player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+            player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 10, 10, false, false, false));
             player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 200, 10));
             player.teleport(lobby.getCenterLoc());
         }),200L);
+
+        this.currentArena = lobby;
+        this.configureWorldBorder();
+    }
+
+    public void forceEnd() {
+        combatTabFooter = Component.text("");
+        updateTabFooter();
+        Bukkit.broadcast(Component.text("Combat ended by force"));
+
+        BambooFighters.setActualGameCombat(null);
+        Bukkit.getWorlds().get(0).setPVP(false);
+
+        Bukkit.getScheduler().runTaskLater(plugin, ()->Bukkit.getOnlinePlayers().forEach(player -> {
+            player.setGameMode(GameMode.ADVENTURE);
+            player.getInventory().clear();
+            player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 10, 10, false, false, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 200, 10));
+            player.teleport(lobby.getCenterLoc());
+        }),200L);
+
+        this.currentArena = lobby;
+        this.configureWorldBorder();
     }
 
     private void formatTimer() {
@@ -225,17 +245,6 @@ public class GameCombat {
         Bukkit.getOnlinePlayers().forEach(p -> p.sendActionBar(Component.text(ChatColor.GRAY + String.format("%02d:%02d", timerMins, timerSecs))));
     }
 
-    private double teamHealth(GameTeam gameTeam) {
-        AtomicReference<Double> d = new AtomicReference<>(0.0);
-
-        gameTeam.getMembers().stream()
-                .filter(p -> p.isOnline())
-                .filter(p -> p.getGameMode() == GameMode.SURVIVAL)
-                .forEach(p -> d.updateAndGet(v -> new Double((double) (v + p.getHealth()))));
-
-        return d.get();
-    }
-
     public boolean hasUsedUltimate(Player player) {
         return this.ultimateUsed.contains(player);
     }
@@ -245,10 +254,30 @@ public class GameCombat {
     }
 
     private void updateTabFooter() {
+        combatTabFooter = ComponentManager.formatMiniMessage(String.format("<bold>%s</bold> <yellow>%d</yellow>-<yellow>%d</yellow> <bold>%s</bold>",
+                team1.getName(),
+                team1Score,
+                team2Score,
+                team2.getName()));
+
         Bukkit.getOnlinePlayers().forEach(p -> {
             p.sendPlayerListFooter(
-                    ComponentManager.formatMiniMessage(combatTabFooter)
+                    combatTabFooter
             );
         });
+    }
+
+    private void configureWorldBorder() {
+        worldBorder.setSize(500);
+        worldBorder.setCenter(this.currentArena.getCenterLoc());
+        worldBorder.setDamageAmount(0.0D);
+    }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public int getMainTask() {
+        return mainTask;
     }
 }

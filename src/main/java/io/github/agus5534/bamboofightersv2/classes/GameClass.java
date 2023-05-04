@@ -1,5 +1,6 @@
 package io.github.agus5534.bamboofightersv2.classes;
 
+import io.github.agus5534.utils.items.ItemCreator;
 import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -21,6 +22,11 @@ public abstract class GameClass implements Listener {
         this.classMaterial = classMaterial;
 
         plugin.getServer().getPluginManager().registerEvents(this,plugin);
+
+        classItems.put(6, new ItemCreator(Material.GOLDEN_APPLE));
+        classItems.put(7, new ItemCreator(Material.SHEARS).setUnbreakable(true));
+        classItems.put(8, new ItemCreator(Material.WHITE_WOOL).amount(16));
+
         setItems(plugin);
     }
 

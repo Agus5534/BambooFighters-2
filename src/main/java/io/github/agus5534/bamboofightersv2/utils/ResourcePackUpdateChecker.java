@@ -1,23 +1,27 @@
 package io.github.agus5534.bamboofightersv2.utils;
 
+import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.utils.text.ComponentManager;
 import org.bukkit.Bukkit;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Properties;
 
 public class ResourcePackUpdateChecker {
     private final String serverHash;
+    private String urlHash;
     public ResourcePackUpdateChecker() {
         this.serverHash = Bukkit.getResourcePackHash();
     }
 
     private boolean isUpdated() throws IOException, NoSuchAlgorithmException {
-        String urlHash = this.sha1Code(Bukkit.getResourcePack());
+        urlHash = this.sha1Code(Bukkit.getResourcePack()).toLowerCase();
 
         return serverHash.equalsIgnoreCase(urlHash);
     }
@@ -29,6 +33,7 @@ public class ResourcePackUpdateChecker {
         }
 
         Bukkit.broadcast(ComponentManager.formatMiniMessage("<red>Se ha encontrado una nueva versión del Resource Pack!</red><gold>Reinicie el servidor para actualizar.</gold>"));
+        Bukkit.getLogger().severe("Found new ResourcePack sha1: " + urlHash);
     }
 
     public void update() throws IOException, NoSuchAlgorithmException {
@@ -38,6 +43,9 @@ public class ResourcePackUpdateChecker {
         }
 
         Bukkit.broadcast(ComponentManager.formatMiniMessage("<red>Se ha encontrado una nueva versión del Resource Pack!</red> <gold>Reinicie el servidor para actualizar.</gold>"));
+        Bukkit.getLogger().severe("Found new ResourcePack sha1: " + urlHash);
+
+        this.replaceServerProperties();
     }
 
     private String sha1Code(String fileUrl) throws IOException, NoSuchAlgorithmException {
@@ -74,5 +82,18 @@ public class ResourcePackUpdateChecker {
             sb.append(Integer.toHexString(value).toUpperCase());
         }
         return sb.toString();
+    }
+
+    private void replaceServerProperties() {
+        try {
+            var rootFile = new File(".");
+            var propertiesFile = new File(rootFile.getAbsolutePath() + "/server.properties");
+            var properties = new PropertiesUtil(propertiesFile);
+
+            properties.setProperty("resource-pack-sha1", urlHash);
+        } catch (Exception e) {
+            Bukkit.getLogger().severe("Failed to update server.properties with new resource pack sha1");
+            e.printStackTrace();
+        }
     }
 }

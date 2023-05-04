@@ -32,6 +32,7 @@ public class EntityDamageListener implements Listener {
 
         player.setGameMode(GameMode.SPECTATOR);
         player.getInventory().clear();
+        player.getActivePotionEffects().forEach(e -> player.removePotionEffect(e.getType()));
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
 
         switch (event.getCause()) {
@@ -39,8 +40,8 @@ public class EntityDamageListener implements Listener {
             case FALL -> broadcastDeathMessage("custom.death.cause_fall",player.getName());
             case DROWNING -> broadcastDeathMessage("custom.death.cause_drowning",player.getName());
             case SUICIDE -> broadcastDeathMessage("custom.death.cause_suicide",player.getName());
-            case POISON, WITHER -> broadcastDeathMessage("custom.death.cause_effect",player.getName());
-            default -> broadcastDeathMessage("custom.death.cause_unknown",player.getName());
+            case POISON, WITHER, MAGIC -> broadcastDeathMessage("custom.death.cause_effect",player.getName());
+            case CUSTOM -> broadcastDeathMessage("custom.death.cause_unknown",player.getName());
         }
     }
 
@@ -53,16 +54,21 @@ public class EntityDamageListener implements Listener {
         if(player.getHealth() - event.getFinalDamage() > 0) { return; }
 
         event.setCancelled(true);
-        event.setDamage(0);
 
         player.setGameMode(GameMode.SPECTATOR);
         player.getInventory().clear();
+        player.getActivePotionEffects().forEach(e -> player.removePotionEffect(e.getType()));
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
 
         switch (event.getCause()) {
             case SUICIDE -> broadcastDeathMessage("custom.death.cause_suicide",player.getName());
             case PROJECTILE -> broadcastDeathMessage("custom.death.cause_projectile",event.getDamager().getCustomName(),player.getName());
-            default -> broadcastDeathMessage("custom.death.cause_player",event.getDamager().getName(),player.getName());
+            case FIRE, FIRE_TICK, HOT_FLOOR, LAVA -> broadcastDeathMessage("custom.death.cause_fire",player.getName());
+            case FALL -> broadcastDeathMessage("custom.death.cause_fall",player.getName());
+            case DROWNING -> broadcastDeathMessage("custom.death.cause_drowning",player.getName());
+            case POISON, WITHER, MAGIC -> broadcastDeathMessage("custom.death.cause_effect",player.getName());
+            case ENTITY_ATTACK, ENTITY_EXPLOSION, ENTITY_SWEEP_ATTACK -> broadcastDeathMessage("custom.death.cause_player",event.getDamager().getName(),player.getName());
+            default -> broadcastDeathMessage("custom.death.cause_unknown",player.getName());
         }
     }
 

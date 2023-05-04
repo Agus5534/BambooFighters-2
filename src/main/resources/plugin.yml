@@ -10,3 +10,5 @@ commands:
   startcombat:
   createteam:
   restartserver:
+  convertlocation:
+  startselection:

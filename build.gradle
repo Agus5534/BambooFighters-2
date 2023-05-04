@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'io.github.agus5534'
-version = '1.0.0-ALPHA'
+version = '1.0.4.04'
 
 shadowJar {
     minimize()

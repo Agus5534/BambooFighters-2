@@ -1,12 +1,12 @@
 package io.github.agus5534.bamboofightersv2;
 
 import io.github.agus5534.bamboofightersv2.classes.GameClass;
+import io.github.agus5534.bamboofightersv2.classes.list.LunariClass;
+import io.github.agus5534.bamboofightersv2.classes.list.CazadorClass;
+import io.github.agus5534.bamboofightersv2.classes.list.MedicoClass;
+import io.github.agus5534.bamboofightersv2.classes.list.MercenarioClass;
 import io.github.agus5534.bamboofightersv2.classes.list.VanguardiaClass;
-import io.github.agus5534.bamboofightersv2.classes.list.legacy.LegacyHealerClass;
-import io.github.agus5534.bamboofightersv2.commands.ClassSelectorCommand;
-import io.github.agus5534.bamboofightersv2.commands.CombatCommand;
-import io.github.agus5534.bamboofightersv2.commands.CreateTeamCommand;
-import io.github.agus5534.bamboofightersv2.commands.RestartServerCommand;
+import io.github.agus5534.bamboofightersv2.commands.*;
 import io.github.agus5534.bamboofightersv2.game.GameCombat;
 import io.github.agus5534.bamboofightersv2.listeners.ExtraListener;
 import io.github.agus5534.bamboofightersv2.listeners.block.BlockListener;
@@ -20,22 +20,19 @@ import io.github.agus5534.bamboofightersv2.utils.ResourcePackUpdateChecker;
 import io.github.agus5534.bamboofightersv2.utils.item.InteractionManager;
 import io.github.agus5534.utils.command.CommandRegisterer;
 import io.github.agus5534.utils.scoreboard.MainScoreboard;
-import io.github.agus5534.utils.text.ComponentManager;
-import io.github.agus5534.utils.text.MiniColor;
 import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import team.unnamed.bukkit.ServerVersion;
 import team.unnamed.gui.menu.listener.InventoryClickListener;
 import team.unnamed.gui.menu.listener.InventoryOpenListener;
 import team.unnamed.gui.menu.v1_19_R1.MenuInventoryWrapperImpl;
 
 import java.io.IOException;
-import java.lang.instrument.IllegalClassFormatException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,6 +51,10 @@ public final class BambooFighters extends JavaPlugin {
     private static GameCombat actualGameCombat = null;
 
     private static List<GameTeam> gameTeams;
+
+    public List<Player> onAnimationPlayer = new ArrayList<>();
+
+    public static List<String> convertedLocations = new ArrayList<>();
 
     private CommandRegisterer commandRegisterer;
 
@@ -81,20 +82,40 @@ public final class BambooFighters extends JavaPlugin {
                 new PlayerInteractListener()
         );
 
-        registerClasses(new VanguardiaClass());
+        registerClasses(
+                new VanguardiaClass(),
+                new CazadorClass(),
+                new MercenarioClass(),
+                new LunariClass(),
+                new MedicoClass()
+        );
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ()-> {
+            if(actualGameCombat != null) {
+                if(!actualGameCombat.isStarted()) {
+                    Bukkit.getOnlinePlayers().forEach(p -> p.sendActionBar(TranslatableText.basicTranslate("game.suggest.selectclass_command")));
+                }
+            }
+        }, 10L, 1L);
 
         commandRegisterer = new CommandRegisterer(this);
 
-        MainScoreboard.registerObjectivesDummy(PlayerSelection.SelectionTier.values().toString().replaceAll("_",""));
+        Bukkit.getLogger().severe("Versión: " + ServerVersion.CURRENT);
+
+        Arrays.stream(PlayerSelection.SelectionTier.values()).forEach(s -> {
+            MainScoreboard.registerObjectiveDummy(s.name().replaceAll("_", ""));
+        });
 
         try {
             commandRegisterer.setCommandConstructors(
                     new ClassSelectorCommand(this),
                     new CombatCommand(this),
                     new CreateTeamCommand(this),
-                    new RestartServerCommand(this)
+                    new RestartServerCommand(this),
+                    new ConvertLocationCommand(),
+                    new StartSelectionCommand(this)
             );
-        } catch (IllegalClassFormatException e) {
+        } catch (NullPointerException e) {
             throw new RuntimeException(e);
         }
 
@@ -125,7 +146,7 @@ public final class BambooFighters extends JavaPlugin {
             } catch (IOException | NoSuchAlgorithmException e) {
                 throw new RuntimeException(e);
             }
-        }, 12000L, 12000L);
+        }, 300L, 12000L);
     }
 
     @Override

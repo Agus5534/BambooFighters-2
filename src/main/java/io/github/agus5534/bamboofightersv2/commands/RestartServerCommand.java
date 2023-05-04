@@ -24,7 +24,7 @@ public class RestartServerCommand extends CommandConstructor {
     BambooFighters plugin;
     Integer tskID;
 
-    public RestartServerCommand(BambooFighters plugin) throws IllegalClassFormatException {
+    public RestartServerCommand(BambooFighters plugin) {
         super();
         this.plugin = plugin;
     }

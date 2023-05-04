@@ -20,8 +20,7 @@ public class CreateTeamCommand extends CommandConstructor {
                 "bamboofighters.staff",
                 "§4Missing permission",
                 PermissionDefault.OP,
-                new SenderType[]{SenderType.PLAYER},
-                true
+                new SenderType[]{SenderType.PLAYER}
         );
         this.plugin = plugin;
     }

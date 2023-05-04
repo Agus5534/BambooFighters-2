@@ -6,8 +6,11 @@ import io.github.agus5534.utils.scoreboard.MainScoreboard;
 import io.github.agus5534.utils.text.TranslatableText;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -15,22 +18,22 @@ import java.util.stream.Collectors;
 public class PlayerSelection {
 
     private final SelectionTier selectionTier;
-    private final List<GameTeam> gameTeams;
+    private final Iterator<GameTeam> gameTeams;
     private Player toSelect;
     private final BambooFighters plugin;
     private boolean hasSelected;
-    private int i = 0, tskID;
+    public boolean a;
+    private int tskID;
 
     public PlayerSelection(SelectionTier selectionTier, List<GameTeam> gameTeams, BambooFighters plugin) {
         this.selectionTier = selectionTier;
 
-        this.gameTeams = gameTeams;
+        this.gameTeams = this.shuffleList(gameTeams, 8).iterator();
 
         this.plugin = plugin;
 
-        this.shuffleList(8);
-
         hasSelected = true;
+        a = false;
     }
 
     public enum SelectionTier {
@@ -40,39 +43,53 @@ public class PlayerSelection {
         TIER_4;
     }
 
-    public void shuffleList(int times) {
+    public List<GameTeam> shuffleList(List<GameTeam> gameTeams, int times) {
         int i = 0;
 
         while (i < times) {
             i++;
             Collections.shuffle(gameTeams, new Random());
         }
+
+        return gameTeams;
     }
 
     public void startSelection() {
         tskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, ()-> {
-            if(!hasSelected) { return; }
+            if(!hasSelected) {
+                if(this.getToSelect() == null) { return; }
+                if(!this.getToSelect().getOpenInventory().getTitle().equalsIgnoreCase("Selección de jugadores") && !a) {
+                    this.getToSelect().openInventory(new TeamSelectionMenu().getInventory(this));
+                    return;
+                }
 
-            if(i >= getPlayers().size()) {
+                return;
+            }
+
+            if(!gameTeams.hasNext()) {
                 cancelTask();
                 Bukkit.broadcast(TranslatableText.basicTranslate("team.selection.round_ended",selectionTier.toString()));
                 return;
             }
 
-            toSelect = gameTeams.get(i).getOwner();
+            var team = gameTeams.next();
+            toSelect = team.getOwner();
+
+            Bukkit.broadcast(TranslatableText.basicTranslate("team.selection.new_turn", toSelect.getName()));
 
             toSelect.openInventory(new TeamSelectionMenu().getInventory(this));
             hasSelected = false;
-            i++;
-        },1L,20L);
+            a = false;
+        },1L,7L);
     }
 
     public List<Player> getPlayers() {
-        String tier = selectionTier.toString().replace("_","");
+        String tier = selectionTier.name().replace("_","");
 
         return Bukkit.getOnlinePlayers().stream()
                 .filter(p -> !BambooFighters.playerGameTeamHashMap.containsKey(p))
                 .filter(p -> MainScoreboard.getScore(tier,p.getName()) != null)
+                .filter(p -> MainScoreboard.getScore(tier,p.getName()).getScore() != 0)
                 .collect(Collectors.toList());
     }
 
@@ -92,5 +109,9 @@ public class PlayerSelection {
         if(Bukkit.getScheduler().isCurrentlyRunning(tskID)) {
             Bukkit.getScheduler().cancelTask(tskID);
         }
+    }
+
+    public SelectionTier getSelectionTier() {
+        return selectionTier;
     }
 }

@@ -1,4 +1,4 @@
-package io.github.agus5534.bamboofightersv2.utils;
+package io.github.agus5534.bamboofightersv2.utils.location;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -6,7 +6,6 @@ import org.bukkit.Location;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class LocationUtil {
@@ -27,7 +26,11 @@ public class LocationUtil {
 
             if(coords.length < 2) { return; }
 
-            var loc = new Location(Bukkit.getWorld(coords[0]), Double.parseDouble(coords[1]), Double.parseDouble(coords[2]), Double.parseDouble(coords[3]), Float.parseFloat(coords[4]), Float.parseFloat(coords[5]));
+            var w = Bukkit.getWorld(coords[0]);
+
+            if(w == null) { w = Bukkit.getWorlds().get(0); }
+
+            var loc = new Location(w, Double.parseDouble(coords[1]), Double.parseDouble(coords[2]), Double.parseDouble(coords[3]), Float.parseFloat(coords[4]), Float.parseFloat(coords[5]));
             locs.add(loc);
         });
 

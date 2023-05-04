@@ -6,6 +6,7 @@ import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
 
@@ -27,6 +28,7 @@ public class GameTeam {
 
         createTeam();
         playerGameClassHashMap = new HashMap<>();
+        Bukkit.broadcast(TranslatableText.basicTranslate("team.created",team.getName()));
         addMember(owner);
     }
 
@@ -76,8 +78,6 @@ public class GameTeam {
         player.teleport(owner.getLocation());
 
         BambooFighters.playerGameTeamHashMap.put(player, this);
-
-        Bukkit.broadcast(TranslatableText.basicTranslate("team.created",team.getName()));
     }
 
     public void setPlayerClass(Player player, GameClass gameClass) {
@@ -89,11 +89,11 @@ public class GameTeam {
     }
 
     public void giveClasses() {
-        getMembers().stream().filter(p -> p.isOnline()).forEach(p -> {
+        getMembers().stream().filter(OfflinePlayer::isOnline).forEach(p -> {
             p.getInventory().clear();
             var c = playerGameClassHashMap.get(p);
 
-            if(c == null) {
+            if(!playerGameClassHashMap.containsKey(p)) {
                 c = BambooFighters.staticGameClass.get(new Random().nextInt(BambooFighters.staticGameClass.size()));
             }
 

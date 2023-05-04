@@ -4,6 +4,7 @@ import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.menus.ClassSelectionMenu;
 import io.github.agus5534.utils.command.CommandConstructor;
 import io.github.agus5534.utils.command.annotations.Command;
+import io.github.agus5534.utils.text.ComponentManager;
 import io.github.agus5534.utils.text.TranslatableText;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
@@ -22,7 +23,7 @@ public class ClassSelectorCommand extends CommandConstructor {
 
     BambooFighters plugin;
 
-    public ClassSelectorCommand(BambooFighters plugin) throws IllegalClassFormatException {
+    public ClassSelectorCommand(BambooFighters plugin) {
         super();
 
         this.plugin = plugin;
@@ -30,8 +31,8 @@ public class ClassSelectorCommand extends CommandConstructor {
 
     @Override
     protected void execute() {
-        if(BambooFighters.getActualGameCombat() != null) {
-            sender.sendMessage(TranslatableText.basicTranslate("command.selectclass.game_running"));
+        if(BambooFighters.getActualGameCombat() == null) {
+            sender.sendMessage(ComponentManager.formatMiniMessage("<red>No hay ningún combate en progreso"));
             return;
         }
 
@@ -39,6 +40,11 @@ public class ClassSelectorCommand extends CommandConstructor {
 
         if(playerTeam == null) {
             sender.sendMessage(TranslatableText.basicTranslate("command.selectclass.missing_team"));
+            return;
+        }
+
+        if(BambooFighters.getActualGameCombat().isStarted()) {
+            sender.sendMessage(TranslatableText.basicTranslate("command.selectclass.game_running"));
             return;
         }
 
