@@ -1,12 +1,12 @@
-package io.github.agus5534.bamboofightersv2.utils;
+package io.github.agus5534.bamboofightersv2.utils.files;
 
 import java.io.*;
 import java.util.Properties;
 
-public class PropertiesUtil {
+public class PropertyFile {
     private Properties properties;
     private File f;
-    public PropertiesUtil(File file) {
+    public PropertyFile(File file) {
         properties = new Properties();
         this.f = file;
 

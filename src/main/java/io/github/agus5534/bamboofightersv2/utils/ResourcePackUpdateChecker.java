@@ -1,6 +1,6 @@
 package io.github.agus5534.bamboofightersv2.utils;
 
-import io.github.agus5534.bamboofightersv2.BambooFighters;
+import io.github.agus5534.bamboofightersv2.utils.files.PropertyFile;
 import io.github.agus5534.utils.text.ComponentManager;
 import org.bukkit.Bukkit;
 
@@ -11,7 +11,6 @@ import java.net.URL;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Properties;
 
 public class ResourcePackUpdateChecker {
     private final String serverHash;
@@ -88,7 +87,7 @@ public class ResourcePackUpdateChecker {
         try {
             var rootFile = new File(".");
             var propertiesFile = new File(rootFile.getAbsolutePath() + "/server.properties");
-            var properties = new PropertiesUtil(propertiesFile);
+            var properties = new PropertyFile(propertiesFile);
 
             properties.setProperty("resource-pack-sha1", urlHash);
         } catch (Exception e) {
