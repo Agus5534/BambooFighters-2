@@ -1,4 +1,4 @@
-package io.github.agus5534.bamboofightersv2.utils.files;
+package io.github.agus5534.bamboofightersv2.utils.files.utils;
 
 import com.google.gson.*;
 

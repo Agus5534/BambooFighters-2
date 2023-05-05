@@ -2,6 +2,7 @@ package io.github.agus5534.bamboofightersv2.game;
 
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.arenas.GameArena;
+import io.github.agus5534.bamboofightersv2.arenas.GameArenaManager;
 import io.github.agus5534.bamboofightersv2.team.GameTeam;
 import io.github.agus5534.utils.text.ComponentManager;
 import io.github.agus5534.utils.text.MiniColor;
@@ -67,7 +68,7 @@ public class GameCombat {
                 team2Score,
                 team2.getName()));
 
-        lobby = GameArena.LOBBY;
+        lobby = GameArenaManager.lobby;
         this.updateTabFooter();
     }
 

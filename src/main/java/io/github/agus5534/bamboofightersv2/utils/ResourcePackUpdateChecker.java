@@ -1,6 +1,6 @@
 package io.github.agus5534.bamboofightersv2.utils;
 
-import io.github.agus5534.bamboofightersv2.utils.files.PropertyFile;
+import io.github.agus5534.bamboofightersv2.utils.files.utils.PropertyFile;
 import io.github.agus5534.utils.text.ComponentManager;
 import org.bukkit.Bukkit;
 

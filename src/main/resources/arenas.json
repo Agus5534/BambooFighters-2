@@ -1,0 +1,20 @@
+[
+  {
+    "name": "arena.example",
+    "name-is-translation": true,
+    "center": "Panda,1121.75,34.53,1223.21,179.12,-4.89",
+    "material": "BARRIER",
+    "regions": {
+      "first-corner": "Panda,1072,66,1173,-37,48",
+      "second-corner": "Panda,1172,111,1274,138,3",
+      "first-team-spawn": [
+        "Panda,1079.64,21,1176.15,-37.01,22.09",
+        "Panda,1076.89,21,1178.22,-37.01,22.09"
+      ],
+      "second-team-spawn": [
+        "Panda,1168.22,21,1265.34,80,48.95",
+        "Panda,1165.73,21,1267.82,80,48.95"
+      ]
+    }
+  }
+]
