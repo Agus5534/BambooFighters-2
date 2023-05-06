@@ -1,9 +1,14 @@
 package io.github.agus5534.bamboofightersv2.game;
 
+import com.google.gson.JsonElement;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.arenas.GameArena;
 import io.github.agus5534.bamboofightersv2.arenas.GameArenaManager;
 import io.github.agus5534.bamboofightersv2.team.GameTeam;
+import io.github.agus5534.bamboofightersv2.utils.TimeFormatter;
+import io.github.agus5534.bamboofightersv2.utils.Validate;
+import io.github.agus5534.bamboofightersv2.utils.files.FileManager;
+import io.github.agus5534.bamboofightersv2.utils.files.utils.JsonFile;
 import io.github.agus5534.utils.text.ComponentManager;
 import io.github.agus5534.utils.text.MiniColor;
 import io.github.agus5534.utils.text.TranslatableText;
@@ -32,12 +37,13 @@ public class GameCombat {
     private final GameTeam team2;
     private int team1Score, team2Score, mainTask, countdownTask, timerMins, timerSecs;
     private final WorldBorder worldBorder;
-    private long ticks = 6000;
+    private long ticks;
+    private TimeFormatter worldBorderDelay;
     private GameArena lobby;
     private List<Player> ultimateUsed;
     private GameArena currentArena;
     private boolean started;
-
+    private JsonFile json;
     private Component combatTabFooter;
 
     public GameCombat(JavaPlugin plugin, List<GameArena> gameArenas, GameTeam team1, GameTeam team2) {
@@ -48,6 +54,10 @@ public class GameCombat {
         this.ultimateUsed = new ArrayList<>();
         this.worldBorder = Bukkit.getWorlds().get(0).getWorldBorder();
         this.started = false;
+        this.json = FileManager.Combat;
+
+        this.ticks = (long) new TimeFormatter((String) Validate.notNull(json.getJsonObject().get("combat-duration").getAsString(), "Missing combat-duration key", new Throwable())).convertTo(TimeFormatter.Format.TICKS);
+        this.worldBorderDelay = new TimeFormatter((String) Validate.notNull(json.getJsonObject().get("worldborder-delay").getAsString(), "Missing worldborder-delay key", new Throwable()));
 
         team1Score = 0;
         team2Score = 0;
@@ -120,8 +130,8 @@ public class GameCombat {
             formatTimer();
         }
 
-        if(ticks == 600) {
-            worldBorder.setSize(20, TimeUnit.SECONDS, 30);
+        if(ticks == (long) worldBorderDelay.convertTo(TimeFormatter.Format.TICKS)) {
+            worldBorder.setSize(20, (long) worldBorderDelay.convertTo(TimeFormatter.Format.SECONDS));
         }
 
         if(getAlive(team1) == 0) {
