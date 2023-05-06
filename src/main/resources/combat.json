@@ -1,4 +1,10 @@
 {
   "combat-duration": "5m",
-  "worldborder-delay": "30s"
+  "precombat-start-duration": "30s",
+  "worldborder-delay": "30s",
+  "worldborder-initial-size": 500,
+  "worldborder-final-size": 30,
+  "combat-rounds": 3,
+  "timer-format": "<gray>%02d:%02d",
+  "tab-footer": "<bold>%s</bold> <yellow>%d</yellow>-<yellow>%d</yellow> <bold>%s</bold>"
 }

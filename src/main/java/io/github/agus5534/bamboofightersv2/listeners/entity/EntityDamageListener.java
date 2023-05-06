@@ -1,5 +1,7 @@
 package io.github.agus5534.bamboofightersv2.listeners.entity;
 
+import io.github.agus5534.bamboofightersv2.BambooFighters;
+import io.github.agus5534.bamboofightersv2.utils.extra.Validate;
 import io.github.agus5534.utils.text.TranslatableText;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -24,24 +26,19 @@ public class EntityDamageListener implements Listener {
     public void onEntityDamage(EntityDamageEvent event) {
         if(!(event.getEntity() instanceof Player)) { return; }
 
+        var combat = BambooFighters.getActualGameCombat();
+
+        if(Validate.isNull(combat)) { return; }
+
         var player = (Player) event.getEntity();
 
         if(player.getHealth() - event.getFinalDamage() > 0) { return; }
 
         event.setDamage(0);
 
-        player.setGameMode(GameMode.SPECTATOR);
-        player.getInventory().clear();
-        player.getActivePotionEffects().forEach(e -> player.removePotionEffect(e.getType()));
-        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
 
         switch (event.getCause()) {
-            case FIRE, FIRE_TICK, HOT_FLOOR, LAVA -> broadcastDeathMessage("custom.death.cause_fire",player.getName());
-            case FALL -> broadcastDeathMessage("custom.death.cause_fall",player.getName());
-            case DROWNING -> broadcastDeathMessage("custom.death.cause_drowning",player.getName());
-            case SUICIDE -> broadcastDeathMessage("custom.death.cause_suicide",player.getName());
-            case POISON, WITHER, MAGIC -> broadcastDeathMessage("custom.death.cause_effect",player.getName());
-            case CUSTOM -> broadcastDeathMessage("custom.death.cause_unknown",player.getName());
+            case FIRE, FIRE_TICK, HOT_FLOOR, LAVA, POISON, WITHER, MAGIC, CUSTOM, SUICIDE, DROWNING, FALL -> combat.playerDied(player, event.getCause(), null);
         }
     }
 
@@ -51,29 +48,19 @@ public class EntityDamageListener implements Listener {
 
         var player = (Player) event.getEntity();
 
+        var combat = BambooFighters.getActualGameCombat();
+
+        if(Validate.isNull(combat)) { return; }
+
         if(player.getHealth() - event.getFinalDamage() > 0) { return; }
 
         event.setCancelled(true);
 
-        player.setGameMode(GameMode.SPECTATOR);
-        player.getInventory().clear();
-        player.getActivePotionEffects().forEach(e -> player.removePotionEffect(e.getType()));
-        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
-
         switch (event.getCause()) {
-            case SUICIDE -> broadcastDeathMessage("custom.death.cause_suicide",player.getName());
-            case PROJECTILE -> broadcastDeathMessage("custom.death.cause_projectile",event.getDamager().getCustomName(),player.getName());
-            case FIRE, FIRE_TICK, HOT_FLOOR, LAVA -> broadcastDeathMessage("custom.death.cause_fire",player.getName());
-            case FALL -> broadcastDeathMessage("custom.death.cause_fall",player.getName());
-            case DROWNING -> broadcastDeathMessage("custom.death.cause_drowning",player.getName());
-            case POISON, WITHER, MAGIC -> broadcastDeathMessage("custom.death.cause_effect",player.getName());
-            case ENTITY_ATTACK, ENTITY_EXPLOSION, ENTITY_SWEEP_ATTACK -> broadcastDeathMessage("custom.death.cause_player",event.getDamager().getName(),player.getName());
-            default -> broadcastDeathMessage("custom.death.cause_unknown",player.getName());
+            case SUICIDE, POISON, WITHER, MAGIC, DROWNING, FALL, FIRE, FIRE_TICK, HOT_FLOOR, LAVA -> combat.playerDied(player, event.getCause(), null);
+            case PROJECTILE, ENTITY_ATTACK, ENTITY_EXPLOSION, ENTITY_SWEEP_ATTACK -> combat.playerDied(player, event.getCause(), event.getDamager());
+            default -> combat.playerDied(player, EntityDamageEvent.DamageCause.CUSTOM, null);
         }
-    }
-
-    private void broadcastDeathMessage(String key, String... values) {
-        Bukkit.broadcast(TranslatableText.basicTranslate(key, values));
     }
 
 }

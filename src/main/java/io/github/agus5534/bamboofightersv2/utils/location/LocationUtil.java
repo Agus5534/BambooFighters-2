@@ -1,5 +1,6 @@
 package io.github.agus5534.bamboofightersv2.utils.location;
 
+import io.github.agus5534.bamboofightersv2.utils.extra.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -28,7 +29,7 @@ public class LocationUtil {
 
             var w = Bukkit.getWorld(coords[0]);
 
-            if(w == null) { w = Bukkit.getWorlds().get(0); }
+            Validate.notNull(w, "Specified World is null", new NullPointerException());
 
             var loc = new Location(w, Double.parseDouble(coords[1]), Double.parseDouble(coords[2]), Double.parseDouble(coords[3]), Float.parseFloat(coords[4]), Float.parseFloat(coords[5]));
             locs.add(loc);
