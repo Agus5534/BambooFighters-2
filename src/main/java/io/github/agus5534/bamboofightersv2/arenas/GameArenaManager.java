@@ -9,7 +9,6 @@ import io.github.agus5534.bamboofightersv2.utils.location.LocationUtil;
 import io.github.agus5534.bamboofightersv2.utils.location.Region;
 import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TranslatableComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

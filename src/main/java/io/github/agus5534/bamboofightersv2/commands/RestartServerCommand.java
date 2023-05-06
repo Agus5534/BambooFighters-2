@@ -3,12 +3,10 @@ package io.github.agus5534.bamboofightersv2.commands;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.utils.command.CommandConstructor;
 import io.github.agus5534.utils.command.annotations.Command;
-import io.github.agus5534.utils.text.ComponentManager;
 import io.github.agus5534.utils.text.TranslatableText;
 import org.bukkit.Bukkit;
 import org.bukkit.permissions.PermissionDefault;
 
-import java.lang.instrument.IllegalClassFormatException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Command(

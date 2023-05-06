@@ -4,11 +4,7 @@ import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.team.PlayerSelection;
 import io.github.agus5534.utils.command.CommandConstructor;
 import io.github.agus5534.utils.command.annotations.Command;
-import io.github.agus5534.utils.text.TranslatableText;
-import org.bukkit.Bukkit;
 import org.bukkit.permissions.PermissionDefault;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Command(
         name = "startselection",

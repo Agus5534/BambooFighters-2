@@ -9,8 +9,6 @@ import io.github.agus5534.utils.text.TranslatableText;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
 
-import java.lang.instrument.IllegalClassFormatException;
-
 @Command(
         name = "selectclass",
         help = "/<command>",

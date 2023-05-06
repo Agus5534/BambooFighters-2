@@ -6,8 +6,6 @@ import io.github.agus5534.utils.scoreboard.MainScoreboard;
 import io.github.agus5534.utils.text.TranslatableText;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.PlayerInventory;
 
 import java.util.Collections;
 import java.util.Iterator;

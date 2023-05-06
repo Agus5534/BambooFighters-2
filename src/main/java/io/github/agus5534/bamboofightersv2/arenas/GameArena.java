@@ -1,9 +1,7 @@
 package io.github.agus5534.bamboofightersv2.arenas;
 
-import io.github.agus5534.bamboofightersv2.utils.location.LocationUtil;
-import io.github.agus5534.bamboofightersv2.utils.location.Region;
 import io.github.agus5534.bamboofightersv2.utils.item.SquaredRegion;
-import io.github.agus5534.utils.text.TranslatableText;
+import io.github.agus5534.bamboofightersv2.utils.location.Region;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;

@@ -2,7 +2,6 @@ package io.github.agus5534.bamboofightersv2.utils.files;
 
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.utils.files.utils.JsonFile;
-import org.bukkit.Bukkit;
 
 import java.io.*;
 

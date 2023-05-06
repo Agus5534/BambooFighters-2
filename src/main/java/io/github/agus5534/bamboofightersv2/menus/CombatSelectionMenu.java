@@ -17,12 +17,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import team.unnamed.gui.menu.item.ItemClickable;
-import team.unnamed.gui.menu.item.action.ItemClickableAction;
 import team.unnamed.gui.menu.type.MenuInventory;
-import team.unnamed.validate.Validate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CombatSelectionMenu {

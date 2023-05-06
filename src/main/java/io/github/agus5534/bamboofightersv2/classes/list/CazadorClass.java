@@ -5,7 +5,6 @@ import io.github.agus5534.bamboofightersv2.classes.GameClass;
 import io.github.agus5534.bamboofightersv2.utils.item.ItemBuilder;
 import io.github.agus5534.utils.items.ItemCreator;
 import io.github.agus5534.utils.text.TranslatableText;
-import it.unimi.dsi.fastutil.Hash;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

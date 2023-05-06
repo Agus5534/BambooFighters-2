@@ -2,10 +2,6 @@ package io.github.agus5534.bamboofightersv2.listeners.entity;
 
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.utils.extra.Validate;
-import io.github.agus5534.utils.text.TranslatableText;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

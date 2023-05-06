@@ -2,11 +2,7 @@ package io.github.agus5534.bamboofightersv2;
 
 import io.github.agus5534.bamboofightersv2.arenas.GameArenaManager;
 import io.github.agus5534.bamboofightersv2.classes.GameClass;
-import io.github.agus5534.bamboofightersv2.classes.list.LunariClass;
-import io.github.agus5534.bamboofightersv2.classes.list.CazadorClass;
-import io.github.agus5534.bamboofightersv2.classes.list.MedicoClass;
-import io.github.agus5534.bamboofightersv2.classes.list.MercenarioClass;
-import io.github.agus5534.bamboofightersv2.classes.list.VanguardiaClass;
+import io.github.agus5534.bamboofightersv2.classes.list.*;
 import io.github.agus5534.bamboofightersv2.commands.*;
 import io.github.agus5534.bamboofightersv2.game.GameCombat;
 import io.github.agus5534.bamboofightersv2.listeners.ExtraListener;
@@ -34,7 +30,6 @@ import team.unnamed.gui.menu.listener.InventoryClickListener;
 import team.unnamed.gui.menu.listener.InventoryOpenListener;
 import team.unnamed.gui.menu.v1_19_R1.MenuInventoryWrapperImpl;
 
-import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -208,6 +203,8 @@ public final class BambooFighters extends JavaPlugin {
     public void saveTeams() {
         var date = Calendar.getInstance().getTime();
         var dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh:mm:ss");
+
+        savedTeamDates.add(dateFormat.format(date));
 
         FileManager.saveAsFile(gameTeams, String.format("teams/%s/teams.bin", dateFormat.format(date)));
         FileManager.saveAsFile(playerGameTeamHashMap, String.format("teams/%s/player_teams.bin", dateFormat.format(date)));

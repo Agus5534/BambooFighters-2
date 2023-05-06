@@ -6,7 +6,6 @@ import io.github.agus5534.utils.items.ItemCreator;
 import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
