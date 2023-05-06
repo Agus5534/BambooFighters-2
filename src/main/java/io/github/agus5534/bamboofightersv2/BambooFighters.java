@@ -1,6 +1,5 @@
 package io.github.agus5534.bamboofightersv2;
 
-import io.github.agus5534.bamboofightersv2.arenas.GameArena;
 import io.github.agus5534.bamboofightersv2.arenas.GameArenaManager;
 import io.github.agus5534.bamboofightersv2.classes.GameClass;
 import io.github.agus5534.bamboofightersv2.classes.list.LunariClass;
@@ -18,8 +17,7 @@ import io.github.agus5534.bamboofightersv2.listeners.player.PlayerInteractListen
 import io.github.agus5534.bamboofightersv2.listeners.player.PlayerJoinListener;
 import io.github.agus5534.bamboofightersv2.team.GameTeam;
 import io.github.agus5534.bamboofightersv2.team.PlayerSelection;
-import io.github.agus5534.bamboofightersv2.utils.ResourcePackUpdateChecker;
-import io.github.agus5534.bamboofightersv2.utils.files.FileManager;
+import io.github.agus5534.bamboofightersv2.utils.extra.ResourcePackUpdateChecker;
 import io.github.agus5534.bamboofightersv2.utils.item.InteractionManager;
 import io.github.agus5534.utils.command.CommandRegisterer;
 import io.github.agus5534.utils.scoreboard.MainScoreboard;

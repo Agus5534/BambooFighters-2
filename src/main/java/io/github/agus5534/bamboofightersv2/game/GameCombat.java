@@ -1,21 +1,18 @@
 package io.github.agus5534.bamboofightersv2.game;
 
-import com.google.gson.JsonElement;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.arenas.GameArena;
 import io.github.agus5534.bamboofightersv2.arenas.GameArenaManager;
 import io.github.agus5534.bamboofightersv2.team.GameTeam;
-import io.github.agus5534.bamboofightersv2.utils.TimeFormatter;
-import io.github.agus5534.bamboofightersv2.utils.Validate;
+import io.github.agus5534.bamboofightersv2.utils.extra.TimeFormatter;
+import io.github.agus5534.bamboofightersv2.utils.extra.Validate;
 import io.github.agus5534.bamboofightersv2.utils.files.FileManager;
 import io.github.agus5534.bamboofightersv2.utils.files.utils.JsonFile;
 import io.github.agus5534.utils.text.ComponentManager;
-import io.github.agus5534.utils.text.MiniColor;
 import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
@@ -25,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 
 @SuppressWarnings("all")
 public class GameCombat {

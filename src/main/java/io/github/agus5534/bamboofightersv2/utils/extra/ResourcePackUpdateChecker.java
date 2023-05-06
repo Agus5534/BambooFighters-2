@@ -1,4 +1,4 @@
-package io.github.agus5534.bamboofightersv2.utils;
+package io.github.agus5534.bamboofightersv2.utils.extra;
 
 import io.github.agus5534.bamboofightersv2.utils.files.utils.PropertyFile;
 import io.github.agus5534.utils.text.ComponentManager;
@@ -33,6 +33,10 @@ public class ResourcePackUpdateChecker {
 
         Bukkit.broadcast(ComponentManager.formatMiniMessage("<red>Se ha encontrado una nueva versión del Resource Pack!</red><gold>Reinicie el servidor para actualizar.</gold>"));
         Bukkit.getLogger().severe("Found new ResourcePack sha1: " + urlHash);
+
+        if(GeneralConfig.updateSha1) {
+            this.replaceServerProperties();
+        }
     }
 
     public void update() throws IOException, NoSuchAlgorithmException {
@@ -44,7 +48,9 @@ public class ResourcePackUpdateChecker {
         Bukkit.broadcast(ComponentManager.formatMiniMessage("<red>Se ha encontrado una nueva versión del Resource Pack!</red> <gold>Reinicie el servidor para actualizar.</gold>"));
         Bukkit.getLogger().severe("Found new ResourcePack sha1: " + urlHash);
 
-        this.replaceServerProperties();
+        if(GeneralConfig.updateSha1) {
+            this.replaceServerProperties();
+        }
     }
 
     private String sha1Code(String fileUrl) throws IOException, NoSuchAlgorithmException {

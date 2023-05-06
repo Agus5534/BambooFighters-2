@@ -1,4 +1,4 @@
-package io.github.agus5534.bamboofightersv2.utils;
+package io.github.agus5534.bamboofightersv2.utils.extra;
 
 public class TimeFormatter {
     private final Format format;
