@@ -18,6 +18,7 @@ import io.github.agus5534.bamboofightersv2.listeners.player.PlayerJoinListener;
 import io.github.agus5534.bamboofightersv2.team.GameTeam;
 import io.github.agus5534.bamboofightersv2.team.PlayerSelection;
 import io.github.agus5534.bamboofightersv2.utils.extra.ResourcePackUpdateChecker;
+import io.github.agus5534.bamboofightersv2.utils.files.FileManager;
 import io.github.agus5534.bamboofightersv2.utils.item.InteractionManager;
 import io.github.agus5534.utils.command.CommandRegisterer;
 import io.github.agus5534.utils.scoreboard.MainScoreboard;
@@ -33,12 +34,11 @@ import team.unnamed.gui.menu.listener.InventoryClickListener;
 import team.unnamed.gui.menu.listener.InventoryOpenListener;
 import team.unnamed.gui.menu.v1_19_R1.MenuInventoryWrapperImpl;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public final class BambooFighters extends JavaPlugin {
 
@@ -64,12 +64,16 @@ public final class BambooFighters extends JavaPlugin {
     public static final Component tabHeader = TranslatableText.basicTranslate("game.player_list_title");
 
     private List<NamedTextColor> colors;
+
+    private static List<String> savedTeamDates;
     @Override
     public void onEnable() {
         instance = this;
 
         playerGameTeamHashMap = new HashMap<>();
         gameTeams = new ArrayList<>();
+        savedTeamDates = new ArrayList<>();
+
         new MainScoreboard();
 
         registerListeners(
@@ -152,11 +156,15 @@ public final class BambooFighters extends JavaPlugin {
 
         GameArenaManager gameArenaManager = new GameArenaManager();
         gameArenaManager.reloadArenas();
+
+        try {
+            savedTeamDates = FileManager.loadObjectFile("savedTeamDates.bin");
+        } catch (Exception e) {}
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        FileManager.saveAsFile(savedTeamDates, "savedTeamDates.bin");
     }
 
 
@@ -195,5 +203,18 @@ public final class BambooFighters extends JavaPlugin {
 
     public List<NamedTextColor> getColors() {
         return colors;
+    }
+
+    public void saveTeams() {
+        var date = Calendar.getInstance().getTime();
+        var dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh:mm:ss");
+
+        FileManager.saveAsFile(gameTeams, String.format("teams/%s/teams.bin", dateFormat.format(date)));
+        FileManager.saveAsFile(playerGameTeamHashMap, String.format("teams/%s/player_teams.bin", dateFormat.format(date)));
+    }
+
+    public void loadTeams(String savedDate) throws Exception {
+        gameTeams = FileManager.loadObjectFile(String.format("teams/%s/teams.bin", savedDate));
+        playerGameTeamHashMap = FileManager.loadObjectFile(String.format("teams/%s/player_teams.bin", savedDate));
     }
 }

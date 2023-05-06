@@ -5,7 +5,7 @@ public class Validate {
         return o == null;
     }
 
-    public static Object notNull(Object o, String error, Throwable throwable) {
+    public static <T> T notNull(T o, String error, Throwable throwable) {
         if(o == null) {
             throw new RuntimeException(error, throwable);
         }

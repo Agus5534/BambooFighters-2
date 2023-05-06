@@ -29,7 +29,7 @@ public class LocationUtil {
 
             var w = Bukkit.getWorld(coords[0]);
 
-            Validate.notNull(w, "Specified World is null", new NullPointerException());
+            Validate.checkNull(w, "Specified World is null", new NullPointerException());
 
             var loc = new Location(w, Double.parseDouble(coords[1]), Double.parseDouble(coords[2]), Double.parseDouble(coords[3]), Float.parseFloat(coords[4]), Float.parseFloat(coords[5]));
             locs.add(loc);

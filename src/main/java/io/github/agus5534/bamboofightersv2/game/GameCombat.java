@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-@SuppressWarnings("all")
+@SuppressWarnings("ConstantConditions")
 public class GameCombat {
 
     private final JavaPlugin plugin;
@@ -54,12 +54,12 @@ public class GameCombat {
         this.started = false;
         this.json = FileManager.Combat;
 
-        this.ticks = (long) new TimeFormatter((String) Validate.notNull(json.getKey("combat-duration").getAsString(), "Missing combat-duration key", new GameCombatStartException())).convertTo(TimeFormatter.Format.TICKS);
-        this.worldBorderDelay = new TimeFormatter((String) Validate.notNull(json.getKey("worldborder-delay").getAsString(), "Missing worldborder-delay key", new GameCombatStartException()));
+        this.ticks = (long) new TimeFormatter(Validate.notNull(json.getKey("combat-duration").getAsString(), "Missing combat-duration key", new GameCombatStartException())).convertTo(TimeFormatter.Format.TICKS);
+        this.worldBorderDelay = new TimeFormatter(Validate.notNull(json.getKey("worldborder-delay").getAsString(), "Missing worldborder-delay key", new GameCombatStartException()));
 
         team1Score = 0;
         team2Score = 0;
-        scoreForWin = (float) Validate.notNull(json.getKey("combat-rounds").getAsInt(), "Missing combat-rounds key", new GameCombatStartException()) / 2;
+        scoreForWin = (float) json.getKey("combat-rounds").getAsInt() / 2;
 
         Collections.shuffle(this.gameArenas);
 
@@ -72,7 +72,7 @@ public class GameCombat {
 
         Bukkit.getScheduler().runTask(plugin, ()-> preStartCombat());
 
-        Bukkit.getScheduler().runTaskLater(plugin, ()-> startCombat(), (long) new TimeFormatter((String) Validate.notNull(json.getKey("precombat-start-duration").getAsString(), "Missing precombat-start-duration key", new GameCombatStartException())).convertTo(TimeFormatter.Format.TICKS));
+        Bukkit.getScheduler().runTaskLater(plugin, ()-> startCombat(), (long) new TimeFormatter(Validate.notNull(json.getKey("precombat-start-duration").getAsString(), "Missing precombat-start-duration key", new GameCombatStartException())).convertTo(TimeFormatter.Format.TICKS));
 
         this.updateTabFooter();
     }
@@ -152,7 +152,7 @@ public class GameCombat {
                 this.gameArenas.remove(currentArena);
 
                 Bukkit.getScheduler().runTaskLater(plugin, ()-> preStartCombat(),100L);
-                Bukkit.getScheduler().runTaskLater(plugin, ()-> startCombat(), (long) new TimeFormatter((String) Validate.notNull(json.getKey("precombat-start-duration").getAsString(), "Missing precombat-start-duration key", new GameCombatStartException())).convertTo(TimeFormatter.Format.TICKS) + 100L);
+                Bukkit.getScheduler().runTaskLater(plugin, ()-> startCombat(), (long) new TimeFormatter(Validate.notNull(json.getKey("precombat-start-duration").getAsString(), "Missing precombat-start-duration key", new GameCombatStartException())).convertTo(TimeFormatter.Format.TICKS) + 100L);
             } else {
                 endGame(team2, team1);
             }
@@ -177,7 +177,7 @@ public class GameCombat {
                 this.worldBorder = currentArena.getCenterLoc().getWorld().getWorldBorder();
 
                 Bukkit.getScheduler().runTaskLater(plugin, ()-> preStartCombat(),100L);
-                Bukkit.getScheduler().runTaskLater(plugin, ()-> startCombat(), (long) new TimeFormatter((String) Validate.notNull(json.getKey("precombat-start-duration").getAsString(), "Missing precombat-start-duration key", new GameCombatStartException())).convertTo(TimeFormatter.Format.TICKS) + 100L);
+                Bukkit.getScheduler().runTaskLater(plugin, ()-> startCombat(), (long) new TimeFormatter(Validate.notNull(json.getKey("precombat-start-duration").getAsString(), "Missing precombat-start-duration key", new GameCombatStartException())).convertTo(TimeFormatter.Format.TICKS) + 100L);
             } else {
                 endGame(team1, team2);
             }
