@@ -5,10 +5,3 @@ api-version: 1.19
 prefix: BF
 authors: [ Agus5534 ]
 description: Plugin para BambooFighters 2
-commands:
-  selectclass:
-  startcombat:
-  createteam:
-  restartserver:
-  convertlocation:
-  startselection:

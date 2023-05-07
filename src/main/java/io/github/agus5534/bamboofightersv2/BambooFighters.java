@@ -3,7 +3,7 @@ package io.github.agus5534.bamboofightersv2;
 import io.github.agus5534.bamboofightersv2.arenas.GameArenaManager;
 import io.github.agus5534.bamboofightersv2.classes.GameClass;
 import io.github.agus5534.bamboofightersv2.classes.list.*;
-import io.github.agus5534.bamboofightersv2.commands.*;
+import io.github.agus5534.bamboofightersv2.commands.manager.CommandManager;
 import io.github.agus5534.bamboofightersv2.game.GameCombat;
 import io.github.agus5534.bamboofightersv2.listeners.ExtraListener;
 import io.github.agus5534.bamboofightersv2.listeners.block.BlockListener;
@@ -16,7 +16,6 @@ import io.github.agus5534.bamboofightersv2.team.PlayerSelection;
 import io.github.agus5534.bamboofightersv2.utils.extra.ResourcePackUpdateChecker;
 import io.github.agus5534.bamboofightersv2.utils.files.FileManager;
 import io.github.agus5534.bamboofightersv2.utils.item.InteractionManager;
-import io.github.agus5534.utils.command.CommandRegisterer;
 import io.github.agus5534.utils.scoreboard.MainScoreboard;
 import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
@@ -51,8 +50,6 @@ public final class BambooFighters extends JavaPlugin {
     public List<Player> onAnimationPlayer = new ArrayList<>();
 
     public static List<String> convertedLocations = new ArrayList<>();
-
-    private CommandRegisterer commandRegisterer;
 
     private MenuInventoryWrapperImpl MenuInventoryWrapperImpl;
 
@@ -99,28 +96,13 @@ public final class BambooFighters extends JavaPlugin {
             }
         }, 10L, 1L);
 
-        commandRegisterer = new CommandRegisterer(this);
-
         Bukkit.getLogger().severe("Versión: " + ServerVersion.CURRENT);
 
         Arrays.stream(PlayerSelection.SelectionTier.values()).forEach(s -> {
             MainScoreboard.registerObjectiveDummy(s.name().replaceAll("_", ""));
         });
 
-        try {
-            commandRegisterer.setCommandConstructors(
-                    new ClassSelectorCommand(this),
-                    new CombatCommand(this),
-                    new CreateTeamCommand(this),
-                    new RestartServerCommand(this),
-                    new ConvertLocationCommand(),
-                    new StartSelectionCommand(this)
-            );
-        } catch (NullPointerException e) {
-            throw new RuntimeException(e);
-        }
-
-        commandRegisterer.register();
+        new CommandManager().load();
 
         colors = new ArrayList<>();
 
@@ -200,7 +182,7 @@ public final class BambooFighters extends JavaPlugin {
         return colors;
     }
 
-    public void saveTeams() {
+    public String saveTeams() {
         var date = Calendar.getInstance().getTime();
         var dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh:mm:ss");
 
@@ -208,6 +190,8 @@ public final class BambooFighters extends JavaPlugin {
 
         FileManager.saveAsFile(gameTeams, String.format("teams/%s/teams.bin", dateFormat.format(date)));
         FileManager.saveAsFile(playerGameTeamHashMap, String.format("teams/%s/player_teams.bin", dateFormat.format(date)));
+
+        return dateFormat.format(date);
     }
 
     public void loadTeams(String savedDate) throws Exception {
