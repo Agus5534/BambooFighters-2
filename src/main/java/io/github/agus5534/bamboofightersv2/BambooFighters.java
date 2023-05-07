@@ -24,7 +24,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import team.unnamed.bukkit.ServerVersion;
 import team.unnamed.gui.menu.listener.InventoryClickListener;
 import team.unnamed.gui.menu.listener.InventoryOpenListener;
 import team.unnamed.gui.menu.v1_19_R1.MenuInventoryWrapperImpl;
@@ -95,8 +94,6 @@ public final class BambooFighters extends JavaPlugin {
                 }
             }
         }, 10L, 1L);
-
-        Bukkit.getLogger().severe("Versión: " + ServerVersion.CURRENT);
 
         Arrays.stream(PlayerSelection.SelectionTier.values()).forEach(s -> {
             MainScoreboard.registerObjectiveDummy(s.name().replaceAll("_", ""));
