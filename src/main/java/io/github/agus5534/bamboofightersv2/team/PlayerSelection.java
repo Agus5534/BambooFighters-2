@@ -66,7 +66,7 @@ public class PlayerSelection {
 
             if(!gameTeams.hasNext()) {
                 cancelTask();
-                Bukkit.broadcast(TranslatableText.basicTranslate("team.selection.round_ended",selectionTier.toString()));
+                Bukkit.broadcast(TranslatableText.basicTranslate("team.selection.round_ended",selectionTier.toString().replaceAll("_", "")));
                 return;
             }
 

@@ -1,4 +1,4 @@
-package io.github.agus5534.bamboofightersv2.utils.item;
+package io.github.agus5534.bamboofightersv2.utils.location;
 
 
 import org.bukkit.Location;
