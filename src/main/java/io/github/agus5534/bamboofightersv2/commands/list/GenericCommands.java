@@ -16,6 +16,7 @@ import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -39,7 +40,7 @@ public class GenericCommands implements CommandClass {
             names = "programrestart",
             permission = "bamboofighters.staff"
     )
-    public void programRestartCommand(@Sender Player sender, @Named("time") TimeFormatter timeFormatter) {
+    public void programRestartCommand(@Sender ConsoleCommandSender sender, @Named("time") TimeFormatter timeFormatter) {
         AtomicInteger ticks = new AtomicInteger((int) timeFormatter.convertTo(TimeFormatter.Format.TICKS));
 
         if(ticks.get() < 600) {
