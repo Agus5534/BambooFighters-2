@@ -35,6 +35,7 @@ dependencies {
     implementation 'team.unnamed:gui-item-skull-api:3.3.2'
     implementation 'team.unnamed:gui-menu-adapt-v1_19_R1:3.3.2:dev'
     implementation 'me.fixeddev:commandflow-bukkit:0.5.2'
+    implementation 'org.reflections:reflections:0.10.2'
 
     implementation 'io.github.agus5534:AgusUtils:2.0'
     annotationProcessor 'io.github.agus5534:AgusUtils:2.0'
