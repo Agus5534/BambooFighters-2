@@ -1,5 +1,7 @@
 package io.github.agus5534.bamboofightersv2.commands.manager.module.parts;
 
+import io.github.agus5534.annotations.arguments.BuildFactory;
+import io.github.agus5534.annotations.arguments.Factory;
 import io.github.agus5534.bamboofightersv2.team.PlayerSelection;
 import me.fixeddev.commandflow.CommandContext;
 import me.fixeddev.commandflow.exception.ArgumentParseException;
@@ -12,6 +14,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@Factory(c = PlayerSelection.SelectionTier.class)
+@BuildFactory
 public class SelectionTierPart implements ArgumentPart {
     private final String name;
 
