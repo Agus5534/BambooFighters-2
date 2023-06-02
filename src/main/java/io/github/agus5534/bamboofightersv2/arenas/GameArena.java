@@ -1,5 +1,6 @@
 package io.github.agus5534.bamboofightersv2.arenas;
 
+import io.github.agus5534.bamboofightersv2.utils.files.FileCreator;
 import io.github.agus5534.bamboofightersv2.utils.location.Region;
 import io.github.agus5534.bamboofightersv2.utils.location.SquaredRegion;
 import net.kyori.adventure.text.Component;
@@ -13,14 +14,16 @@ public class GameArena {
     private final Location centerLoc;
     private final Material arenaIcon;
     private final SquaredRegion squaredRegion;
+    private final FileCreator file;
 
-    GameArena(Region team1Region, Region team2Region, Location centerLoc, SquaredRegion squaredRegion, Component arenaName, Material arenaIcon) {
+    GameArena(Region team1Region, Region team2Region, Location centerLoc, SquaredRegion squaredRegion, Component arenaName, Material arenaIcon, FileCreator file) {
         this.team1Region = team1Region;
         this.team2Region = team2Region;
         this.centerLoc = centerLoc;
         this.squaredRegion = squaredRegion;
         this.arenaName = arenaName;
         this.arenaIcon = arenaIcon;
+        this.file = file;
     }
 
     public Region getTeam1Region() {
@@ -44,5 +47,9 @@ public class GameArena {
     }
     public Component getArenaName() {
         return arenaName;
+    }
+
+    public FileCreator getFileCreator() {
+        return file;
     }
 }
