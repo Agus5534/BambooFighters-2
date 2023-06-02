@@ -3,7 +3,6 @@ package io.github.agus5534.bamboofightersv2.classes.list;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.classes.GameClass;
 import io.github.agus5534.bamboofightersv2.utils.item.ItemBuilder;
-import io.github.agus5534.utils.items.ItemCreator;
 import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -36,12 +35,12 @@ public class MercenarioClass extends GameClass {
         Component ULTIMATE = TranslatableText.basicTranslate("class.mercenario.item_ultimate");
         var classItem = this.getClassItems();
 
-        classItem.put(39, new ItemCreator(Material.LEATHER_HELMET).name(HELMET).setUnbreakable(true));
-        classItem.put(38, new ItemCreator(Material.CHAINMAIL_CHESTPLATE).name(CHESTPLATE).setUnbreakable(true).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1));
-        classItem.put(37, new ItemCreator(Material.GOLDEN_LEGGINGS).name(LEGGINGS).setUnbreakable(true).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1));
-        classItem.put(36, new ItemCreator(Material.GOLDEN_BOOTS).name(BOOTS).setUnbreakable(true).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).enchants(Enchantment.PROTECTION_PROJECTILE, 1));
+        classItem.put(39, new ItemBuilder(Material.LEATHER_HELMET).setDisplayName(HELMET).setUnbreakable(true).build());
+        classItem.put(38, new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).setDisplayName(CHESTPLATE).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build());
+        classItem.put(37, new ItemBuilder(Material.GOLDEN_LEGGINGS).setDisplayName(LEGGINGS).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).build());
+        classItem.put(36, new ItemBuilder(Material.GOLDEN_BOOTS).setDisplayName(BOOTS).setUnbreakable(true).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).addEnchant(Enchantment.PROTECTION_PROJECTILE, 1).build());
 
-        classItem.put(0, new ItemCreator(Material.STONE_SWORD).name(WEAPON).setUnbreakable(true).enchants(Enchantment.DAMAGE_ALL, 1));
+        classItem.put(0, new ItemBuilder(Material.STONE_SWORD).setDisplayName(WEAPON).setUnbreakable(true).addEnchant(Enchantment.DAMAGE_ALL, 1).build());
         classItem.put(2, new ItemBuilder(Material.CARROT_ON_A_STICK).setDisplayName(ULTIMATE).onConsumeRightClick("mercenario_ultimate", event -> {
             var combat = BambooFighters.getActualGameCombat();
             if(combat == null) { return; }

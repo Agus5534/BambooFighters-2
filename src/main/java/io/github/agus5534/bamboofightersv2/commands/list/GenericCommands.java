@@ -7,7 +7,7 @@ import io.github.agus5534.bamboofightersv2.team.PlayerSelection;
 import io.github.agus5534.bamboofightersv2.utils.extra.TimeFormatter;
 import io.github.agus5534.bamboofightersv2.utils.extra.Validate;
 import io.github.agus5534.bamboofightersv2.utils.location.LocationUtil;
-import io.github.agus5534.utils.text.ComponentManager;
+import io.github.agus5534.utils.text.ChatFormatter;
 import io.github.agus5534.utils.text.TranslatableText;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
@@ -43,12 +43,12 @@ public class GenericCommands implements CommandClass {
         AtomicInteger ticks = new AtomicInteger((int) timeFormatter.convertTo(TimeFormatter.Format.TICKS));
 
         if(ticks.get() < 600) {
-            sender.sendMessage(ComponentManager.formatMiniMessage("<red>No se puede colocar menos de 30 segundos."));
+            sender.sendMessage(ChatFormatter.formatMiniMessage("<red>No se puede colocar menos de 30 segundos."));
             return;
         }
 
         if(!Validate.isNull(taskID)) {
-            sender.sendMessage(ComponentManager.formatMiniMessage("<red>Ya hay un reinicio pendiente."));
+            sender.sendMessage(ChatFormatter.formatMiniMessage("<red>Ya hay un reinicio pendiente."));
             return;
         }
 
@@ -79,7 +79,7 @@ public class GenericCommands implements CommandClass {
         var combat = BambooFighters.getActualGameCombat();
 
         if(Validate.isNull(combat)) {
-            sender.sendMessage(ComponentManager.formatMiniMessage("<red>No hay ningún combate en progreso"));
+            sender.sendMessage(ChatFormatter.formatMiniMessage("<red>No hay ningún combate en progreso"));
             return;
         }
 

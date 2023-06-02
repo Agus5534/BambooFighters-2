@@ -3,7 +3,6 @@ package io.github.agus5534.bamboofightersv2.classes.list;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.classes.GameClass;
 import io.github.agus5534.bamboofightersv2.utils.item.ItemBuilder;
-import io.github.agus5534.utils.items.ItemCreator;
 import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -42,12 +41,12 @@ public class CazadorClass extends GameClass {
 
         var classItems = this.getClassItems();
 
-        classItems.put(39, new ItemCreator(Material.IRON_HELMET).name(HELMET).enchants(Enchantment.PROTECTION_PROJECTILE,1).enchants(Enchantment.PROTECTION_ENVIRONMENTAL,1).setUnbreakable(true));
-        classItems.put(38, new ItemCreator(Material.CHAINMAIL_CHESTPLATE).name(CHESTPLATE).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true));
-        classItems.put(37, new ItemCreator(Material.CHAINMAIL_LEGGINGS).name(LEGGINGS).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true));
-        classItems.put(36, new ItemCreator(Material.LEATHER_BOOTS).name(BOOTS).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).enchants(Enchantment.PROTECTION_PROJECTILE, 1).setUnbreakable(true));
+        classItems.put(39, new ItemBuilder(Material.IRON_HELMET).setDisplayName(HELMET).addEnchant(Enchantment.PROTECTION_PROJECTILE,1).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,1).setUnbreakable(true).build());
+        classItems.put(38, new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).setDisplayName(CHESTPLATE).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true).build());
+        classItems.put(37, new ItemBuilder(Material.CHAINMAIL_LEGGINGS).setDisplayName(LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true).build());
+        classItems.put(36, new ItemBuilder(Material.LEATHER_BOOTS).setDisplayName(BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).addEnchant(Enchantment.PROTECTION_PROJECTILE, 1).setUnbreakable(true).build());
 
-        classItems.put(0, new ItemCreator(Material.WOODEN_SWORD).name(WEAPON).setUnbreakable(true));
+        classItems.put(0, new ItemBuilder(Material.WOODEN_SWORD).setDisplayName(WEAPON).setUnbreakable(true).build());
         classItems.put(2, new ItemBuilder(Material.BONE).setDisplayName(ULTIMATE).onConsumeRightClick("cazador_ultimate", event -> {
             var combat = BambooFighters.getActualGameCombat();
             if(combat == null) { return; }
@@ -70,7 +69,7 @@ public class CazadorClass extends GameClass {
                 integerPotionEffectHashMap.put(n, potEff);
 
                 var arrowName = TranslatableText.basicTranslate("class.cazador.item_arrow", randomEffect.getName().toUpperCase());
-                var item = new ItemCreator(Material.TIPPED_ARROW).name(arrowName).setCustomModelData(n);
+                var item = new ItemBuilder(Material.TIPPED_ARROW).setDisplayName(arrowName).setCustomModelData(n).build();
                 var arrowMeta = (PotionMeta) item.getItemMeta();
                 arrowMeta.setColor(randomEffect.getColor());
 
@@ -81,8 +80,8 @@ public class CazadorClass extends GameClass {
                 i++;
             }
         }).build());
-        classItems.put(1, new ItemCreator(Material.BOW).name(BOW).enchants(Enchantment.ARROW_DAMAGE, 1).setUnbreakable(true));
-        classItems.put(4, new ItemCreator(Material.ARROW).amount(16));
+        classItems.put(1, new ItemBuilder(Material.BOW).setDisplayName(BOW).addEnchant(Enchantment.ARROW_DAMAGE, 1).setUnbreakable(true).build());
+        classItems.put(4, new ItemBuilder(Material.ARROW, 16).build());
     }
 
     @EventHandler
@@ -91,7 +90,7 @@ public class CazadorClass extends GameClass {
             var arrow = (Arrow)event.getDamager();
             var player = (Player)event.getEntity();
             if(arrow.getItemStack() != null) {
-                var is = new ItemCreator(arrow.getItemStack());
+                var is = new ItemBuilder(arrow.getItemStack()).build();
                 if(is.getItemMeta() == null) { return; }
                 if(!is.getItemMeta().hasCustomModelData()) { return; }
 

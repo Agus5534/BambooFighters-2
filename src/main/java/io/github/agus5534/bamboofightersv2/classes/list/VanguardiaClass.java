@@ -3,7 +3,6 @@ package io.github.agus5534.bamboofightersv2.classes.list;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.classes.GameClass;
 import io.github.agus5534.bamboofightersv2.utils.item.ItemBuilder;
-import io.github.agus5534.utils.items.ItemCreator;
 import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -30,13 +29,13 @@ public class VanguardiaClass extends GameClass {
 
         var classItem = this.getClassItems();
 
-        classItem.put(39, new ItemCreator(Material.IRON_HELMET).name(HELMET).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).enchants(Enchantment.PROTECTION_PROJECTILE, 1).setUnbreakable(true));
-        classItem.put(38, new ItemCreator(Material.IRON_CHESTPLATE).name(CHESTPLATE).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true));
-        classItem.put(37, new ItemCreator(Material.IRON_LEGGINGS).name(LEGGINGS).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true));
-        classItem.put(36, new ItemCreator(Material.IRON_BOOTS).name(BOOTS).enchants(Enchantment.PROTECTION_PROJECTILE, 1).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true));
-        classItem.put(0, new ItemCreator(Material.WOODEN_SWORD).name(ULTIMATE).setUnbreakable(true));
+        classItem.put(39, new ItemBuilder(Material.IRON_HELMET).setDisplayName(HELMET).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).addEnchant(Enchantment.PROTECTION_PROJECTILE, 1).setUnbreakable(true).build());
+        classItem.put(38, new ItemBuilder(Material.IRON_CHESTPLATE).setDisplayName(CHESTPLATE).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true).build());
+        classItem.put(37, new ItemBuilder(Material.IRON_LEGGINGS).setDisplayName(LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true).build());
+        classItem.put(36, new ItemBuilder(Material.IRON_BOOTS).setDisplayName(BOOTS).addEnchant(Enchantment.PROTECTION_PROJECTILE, 1).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true).build());
+        classItem.put(0, new ItemBuilder(Material.WOODEN_SWORD).setDisplayName(ULTIMATE).setUnbreakable(true).build());
 
-        var shield = new ItemCreator(Material.SHIELD).name(SHIELD);
+        var shield = new ItemBuilder(Material.SHIELD).setDisplayName(SHIELD).build();
         var meta = (Damageable)shield.getItemMeta();
         meta.setDamage(292);
         shield.setItemMeta(meta);

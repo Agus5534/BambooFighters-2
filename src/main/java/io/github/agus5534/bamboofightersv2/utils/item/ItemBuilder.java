@@ -1,10 +1,11 @@
 package io.github.agus5534.bamboofightersv2.utils.item;
 
 import io.github.agus5534.bamboofightersv2.BambooFighters;
-import io.github.agus5534.utils.text.ComponentManager;
+import io.github.agus5534.utils.text.ChatFormatter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
@@ -17,6 +18,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
@@ -69,7 +71,7 @@ public class ItemBuilder {
 
     public ItemBuilder setDisplayName(String name) {
         this.im = this.is.getItemMeta();
-        this.im.displayName(ComponentManager.formatString(name));
+        this.im.displayName(ChatFormatter.formatString(name));
         this.is.setItemMeta(this.im);
         return this;
     }
@@ -101,6 +103,13 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder setSkullSkin(OfflinePlayer player) {
+        final SkullMeta skullMeta = (SkullMeta) this.is.getItemMeta();
+        skullMeta.setOwningPlayer(player);
+        this.is.setItemMeta(skullMeta);
+        return this;
+    }
+
     public ItemBuilder addItemFlag(ItemFlag... itemFlag) {
         this.im = this.is.getItemMeta();
         this.im.addItemFlags(itemFlag);
@@ -117,7 +126,19 @@ public class ItemBuilder {
 
 
     public ItemBuilder setLore(String... lore) {
-        this.setLore(Arrays.stream(lore).map(ComponentManager::formatString).collect(Collectors.toList()));
+        this.setLore(Arrays.stream(lore).map(ChatFormatter::formatString).collect(Collectors.toList()));
+        return this;
+    }
+
+    public ItemBuilder clearEnchants() {
+        this.im = this.is.getItemMeta();
+        this.im.getEnchants().forEach((enchantment, integer) -> this.im.removeEnchant(enchantment));
+        this.is.setItemMeta(this.im);
+        return this;
+    }
+
+    public ItemBuilder setLore(Component... lore) {
+        this.setLore(List.of(lore));
         return this;
     }
 

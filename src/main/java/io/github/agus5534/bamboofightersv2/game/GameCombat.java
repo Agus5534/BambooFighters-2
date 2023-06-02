@@ -9,7 +9,7 @@ import io.github.agus5534.bamboofightersv2.utils.extra.TimeFormatter;
 import io.github.agus5534.bamboofightersv2.utils.extra.Validate;
 import io.github.agus5534.bamboofightersv2.utils.files.FileManager;
 import io.github.agus5534.bamboofightersv2.utils.files.utils.JsonFile;
-import io.github.agus5534.utils.text.ComponentManager;
+import io.github.agus5534.utils.text.ChatFormatter;
 import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
@@ -292,7 +292,7 @@ public class GameCombat {
         var timer = json.getKey("timer-format").getAsString();
         Validate.checkNull(timer, "Missing timer-format key", new GameCombatStartException());
 
-        Bukkit.getOnlinePlayers().forEach(p -> p.sendActionBar(ComponentManager.formatMiniMessage(String.format(timer, timerMins, timerSecs))));
+        Bukkit.getOnlinePlayers().forEach(p -> p.sendActionBar(ChatFormatter.formatMiniMessage(String.format(timer, timerMins, timerSecs))));
     }
 
     public boolean hasUsedUltimate(Player player) {
@@ -307,7 +307,7 @@ public class GameCombat {
         String footer = json.getKey("tab-footer").getAsString();
         Validate.checkNull(footer, "Missing tab-footer key", new GameCombatStartException());
 
-        combatTabFooter = ComponentManager.formatMiniMessage(String.format(footer,
+        combatTabFooter = ChatFormatter.formatMiniMessage(String.format(footer,
                 team1.getName(),
                 team1Score,
                 team2Score,

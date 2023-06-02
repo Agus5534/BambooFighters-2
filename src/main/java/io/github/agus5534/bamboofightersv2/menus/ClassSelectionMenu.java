@@ -2,7 +2,7 @@ package io.github.agus5534.bamboofightersv2.menus;
 
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.classes.GameClass;
-import io.github.agus5534.utils.items.ItemCreator;
+import io.github.agus5534.bamboofightersv2.utils.item.ItemBuilder;
 import io.github.agus5534.utils.text.TranslatableText;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -22,15 +22,15 @@ public class ClassSelectionMenu {
 
     public ClassSelectionMenu(BambooFighters plugin) {
         this.plugin = plugin;
-        borderItem = new ItemCreator(Material.BLACK_STAINED_GLASS_PANE).name(" ");
-        noEntity = new ItemCreator(Material.LIGHT_GRAY_STAINED_GLASS_PANE).name(" ");
+        borderItem = new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" ").build();
+        noEntity = new ItemBuilder(Material.LIGHT_GRAY_STAINED_GLASS_PANE).setDisplayName(" ").build();
     }
 
     public Inventory getInventory() {
         return MenuInventory.newPaginatedBuilder(GameClass.class, "Selector de Clases")
                 .entities(plugin.getGameClasses())
                 .itemsPerRow(7)
-                .entityParser(gameClass -> ItemClickable.builder().item(new ItemCreator(gameClass.getClassMaterial()).name(gameClass.getClassName())).action(event -> {
+                .entityParser(gameClass -> ItemClickable.builder().item(new ItemBuilder(gameClass.getClassMaterial()).setDisplayName(gameClass.getClassName()).build()).action(event -> {
                     if(!(event.getWhoClicked() instanceof Player)) { return true; }
 
                     var p = (Player)event.getWhoClicked();
@@ -53,8 +53,8 @@ public class ClassSelectionMenu {
                 .itemIfNoEntities(ItemClickable.onlyItem(noEntity))
                 .itemIfNoPreviousPage(ItemClickable.onlyItem(borderItem))
                 .itemIfNoNextPage(ItemClickable.onlyItem(borderItem))
-                .nextPageItem(p -> ItemClickable.onlyItem(new ItemCreator(Material.DIAMOND).name(ChatColor.translateAlternateColorCodes('&',"Siguiente Página"))))
-                .previousPageItem(p -> ItemClickable.onlyItem(new ItemCreator(Material.GOLD_INGOT).name(ChatColor.translateAlternateColorCodes('&',"Anterior Página"))))
+                .nextPageItem(p -> ItemClickable.onlyItem(new ItemBuilder(Material.DIAMOND).setDisplayName(ChatColor.translateAlternateColorCodes('&',"Siguiente Página")).build()))
+                .previousPageItem(p -> ItemClickable.onlyItem(new ItemBuilder(Material.GOLD_INGOT).setDisplayName(ChatColor.translateAlternateColorCodes('&',"Anterior Página")).build()))
                 .introduceItems(false)
                 .fillBorders(ItemClickable.onlyItem(borderItem))
                 .layoutLines(

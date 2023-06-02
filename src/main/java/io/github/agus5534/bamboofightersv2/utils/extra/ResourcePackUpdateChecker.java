@@ -1,7 +1,7 @@
 package io.github.agus5534.bamboofightersv2.utils.extra;
 
 import io.github.agus5534.bamboofightersv2.utils.files.utils.PropertyFile;
-import io.github.agus5534.utils.text.ComponentManager;
+import io.github.agus5534.utils.text.ChatFormatter;
 import org.bukkit.Bukkit;
 
 import java.io.File;
@@ -27,11 +27,11 @@ public class ResourcePackUpdateChecker {
 
     public void forceUpdate() throws IOException, NoSuchAlgorithmException {
         if(this.isUpdated()) {
-            Bukkit.broadcast(ComponentManager.formatMiniMessage("<green>El ResourcePack está actualizado.</green>"));
+            Bukkit.broadcast(ChatFormatter.formatMiniMessage("<green>El ResourcePack está actualizado.</green>"));
             return;
         }
 
-        Bukkit.broadcast(ComponentManager.formatMiniMessage("<red>Se ha encontrado una nueva versión del Resource Pack!</red><gold>Reinicie el servidor para actualizar.</gold>"));
+        Bukkit.broadcast(ChatFormatter.formatMiniMessage("<red>Se ha encontrado una nueva versión del Resource Pack!</red><gold>Reinicie el servidor para actualizar.</gold>"));
         Bukkit.getLogger().severe("Found new ResourcePack sha1: " + urlHash);
 
         if(GeneralConfig.updateSha1) {
@@ -45,7 +45,7 @@ public class ResourcePackUpdateChecker {
             return;
         }
 
-        Bukkit.broadcast(ComponentManager.formatMiniMessage("<red>Se ha encontrado una nueva versión del Resource Pack!</red> <gold>Reinicie el servidor para actualizar.</gold>"));
+        Bukkit.broadcast(ChatFormatter.formatMiniMessage("<red>Se ha encontrado una nueva versión del Resource Pack!</red> <gold>Reinicie el servidor para actualizar.</gold>"));
         Bukkit.getLogger().severe("Found new ResourcePack sha1: " + urlHash);
 
         if(GeneralConfig.updateSha1) {

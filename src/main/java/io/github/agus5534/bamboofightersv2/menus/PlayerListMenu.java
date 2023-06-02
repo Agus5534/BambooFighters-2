@@ -1,9 +1,9 @@
 package io.github.agus5534.bamboofightersv2.menus;
 
 import io.github.agus5534.bamboofightersv2.BambooFighters;
-import io.github.agus5534.utils.items.ItemCreator;
+import io.github.agus5534.bamboofightersv2.utils.item.ItemBuilder;
 import io.github.agus5534.utils.scoreboard.MainScoreboard;
-import io.github.agus5534.utils.text.ComponentManager;
+import io.github.agus5534.utils.text.ChatFormatter;
 import io.github.agus5534.utils.text.MiniColor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,21 +21,21 @@ public class PlayerListMenu {
     private ItemStack noEntity;
 
     public PlayerListMenu() {
-        borderItem = new ItemCreator(Material.BLACK_STAINED_GLASS_PANE).name(" ");
-        noEntity = new ItemCreator(Material.LIGHT_GRAY_STAINED_GLASS_PANE).name(" ");
+        borderItem = new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(" ").build();
+        noEntity = new ItemBuilder(Material.LIGHT_GRAY_STAINED_GLASS_PANE).setDisplayName(" ").build();
     }
 
     public Inventory getInventory() {
         return MenuInventory.newPaginatedBuilder(OfflinePlayer.class, "Jugadores")
                 .itemIfNoEntities(ItemClickable.onlyItem(noEntity))
                 .entityParser(offlinePlayer -> ItemClickable.onlyItem(
-                        new ItemCreator(Material.PLAYER_HEAD).setSkullSkin(offlinePlayer)
-                                .name(offlinePlayer.getName())
-                                .lore(ComponentManager.formatMiniMessage(MiniColor.GRAY + getTier(offlinePlayer)),
-                                        ComponentManager.formatMiniMessage(MiniColor.GRAY + "Team: " + getTeam(offlinePlayer)))
+                        new ItemBuilder(Material.PLAYER_HEAD).setSkullSkin(offlinePlayer)
+                                .setDisplayName(offlinePlayer.getName())
+                                .setLore(ChatFormatter.formatMiniMessage(MiniColor.GRAY + getTier(offlinePlayer)),
+                                        ChatFormatter.formatMiniMessage(MiniColor.GRAY + "Team: " + getTeam(offlinePlayer))).build()
                 ))
-                .nextPageItem(p -> ItemClickable.onlyItem(new ItemCreator(Material.DIAMOND).name(ChatColor.translateAlternateColorCodes('&',"Siguiente Página"))))
-                .previousPageItem(p -> ItemClickable.onlyItem(new ItemCreator(Material.GOLD_INGOT).name(ChatColor.translateAlternateColorCodes('&',"Anterior Página"))))
+                .nextPageItem(p -> ItemClickable.onlyItem(new ItemBuilder(Material.DIAMOND).setDisplayName(ChatColor.translateAlternateColorCodes('&',"Siguiente Página")).build()))
+                .previousPageItem(p -> ItemClickable.onlyItem(new ItemBuilder(Material.GOLD_INGOT).setDisplayName(ChatColor.translateAlternateColorCodes('&',"Anterior Página")).build()))
                 .itemIfNoNextPage(ItemClickable.onlyItem(borderItem))
                 .itemIfNoPreviousPage(ItemClickable.onlyItem(borderItem))
                 .entities(Arrays.stream(Bukkit.getOfflinePlayers()).toList())

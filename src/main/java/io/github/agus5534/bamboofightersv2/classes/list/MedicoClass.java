@@ -3,7 +3,6 @@ package io.github.agus5534.bamboofightersv2.classes.list;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.classes.GameClass;
 import io.github.agus5534.bamboofightersv2.utils.item.ItemBuilder;
-import io.github.agus5534.utils.items.ItemCreator;
 import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
@@ -31,19 +30,19 @@ public class MedicoClass extends GameClass {
         Component BOW = TranslatableText.basicTranslate("class.medico.item_bow");
         var classItem = this.getClassItems();
 
-        classItem.put(39, new ItemCreator(Material.LEATHER_HELMET).name(HELMET).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).enchants(Enchantment.PROTECTION_PROJECTILE, 1).setUnbreakable(true));
-        classItem.put(38, new ItemCreator(Material.CHAINMAIL_CHESTPLATE).name(CHESTPLATE).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true));
-        classItem.put(37, new ItemCreator(Material.LEATHER_LEGGINGS).name(LEGGINGS).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true));
-        classItem.put(36, new ItemCreator(Material.IRON_BOOTS).name(BOOTS).enchants(Enchantment.PROTECTION_PROJECTILE, 1).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true));
-        classItem.put(0, new ItemCreator(Material.IRON_HOE).name(WEAPON).enchants(Enchantment.KNOCKBACK, 1).setUnbreakable(true));
-        var item = new ItemCreator(Material.SPLASH_POTION).name(ChatColor.translateAlternateColorCodes('&', "&cHealing Potion")).potionEffect(PotionEffectType.HEAL, 60, 1);
+        classItem.put(39, new ItemBuilder(Material.LEATHER_HELMET).setDisplayName(HELMET).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).addEnchant(Enchantment.PROTECTION_PROJECTILE, 1).setUnbreakable(true).build());
+        classItem.put(38, new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).setDisplayName(CHESTPLATE).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true).build());
+        classItem.put(37, new ItemBuilder(Material.LEATHER_LEGGINGS).setDisplayName(LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true).build());
+        classItem.put(36, new ItemBuilder(Material.IRON_BOOTS).setDisplayName(BOOTS).addEnchant(Enchantment.PROTECTION_PROJECTILE, 1).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true).build());
+        classItem.put(0, new ItemBuilder(Material.IRON_HOE).setDisplayName(WEAPON).addEnchant(Enchantment.KNOCKBACK, 1).setUnbreakable(true).build());
+        var item = new ItemBuilder(Material.SPLASH_POTION).setDisplayName(ChatColor.translateAlternateColorCodes('&', "&cHealing Potion")).build();
         var potionMeta = (PotionMeta) item.getItemMeta();
         potionMeta.setColor(PotionEffectType.HEAL.getColor());
         potionMeta.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL, false, true));
         item.setItemMeta(potionMeta);
 
-        classItem.put(1, new ItemCreator(Material.BOW).name(BOW).enchants(Enchantment.ARROW_KNOCKBACK, 2).setUnbreakable(true));
-        classItem.put(28, new ItemCreator(Material.ARROW).amount(6));
+        classItem.put(1, new ItemBuilder(Material.BOW).setDisplayName(BOW).addEnchant(Enchantment.ARROW_KNOCKBACK, 2).setUnbreakable(true).build());
+        classItem.put(28, new ItemBuilder(Material.ARROW, 6).build());
         classItem.put(3, item);
         classItem.put(4, item);
         classItem.put(5, item);

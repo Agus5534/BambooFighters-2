@@ -2,7 +2,7 @@ package io.github.agus5534.bamboofightersv2.classes.list;
 
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.classes.GameClass;
-import io.github.agus5534.utils.items.ItemCreator;
+import io.github.agus5534.bamboofightersv2.utils.item.ItemBuilder;
 import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -29,10 +29,10 @@ public class LunariClass extends GameClass {
     protected void setItems(JavaPlugin plugin) {
         var classItem = this.getClassItems();
 
-        classItem.put(39, new ItemCreator(Material.LEATHER_HELMET).name("Armadura Lunari").enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).enchants(Enchantment.PROTECTION_PROJECTILE, 1).setUnbreakable(true));
-        classItem.put(38, new ItemCreator(Material.LEATHER_CHESTPLATE).name("Armadura Lunari").enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true));
-        classItem.put(37, new ItemCreator(Material.LEATHER_LEGGINGS).name("Armadura Lunari").enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true));
-        classItem.put(36, new ItemCreator(Material.GOLDEN_BOOTS).name("Botas Lunari").enchants(Enchantment.PROTECTION_PROJECTILE, 1).enchants(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true));
-        classItem.put(0, new ItemCreator(Material.GOLDEN_AXE).name(WEAPON).setUnbreakable(true));
+        classItem.put(39, new ItemBuilder(Material.LEATHER_HELMET).setDisplayName("Armadura Lunari").addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).addEnchant(Enchantment.PROTECTION_PROJECTILE, 1).setUnbreakable(true).build());
+        classItem.put(38, new ItemBuilder(Material.LEATHER_CHESTPLATE).setDisplayName("Armadura Lunari").addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true).build());
+        classItem.put(37, new ItemBuilder(Material.LEATHER_LEGGINGS).setDisplayName("Armadura Lunari").addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true).build());
+        classItem.put(36, new ItemBuilder(Material.GOLDEN_BOOTS).setDisplayName("Botas Lunari").addEnchant(Enchantment.PROTECTION_PROJECTILE, 1).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setUnbreakable(true).build());
+        classItem.put(0, new ItemBuilder(Material.GOLDEN_AXE).setDisplayName(WEAPON).setUnbreakable(true).build());
     }
 }

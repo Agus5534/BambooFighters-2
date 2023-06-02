@@ -3,7 +3,7 @@ package io.github.agus5534.bamboofightersv2.commands.list;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.team.GameTeam;
 import io.github.agus5534.bamboofightersv2.utils.extra.Validate;
-import io.github.agus5534.utils.text.ComponentManager;
+import io.github.agus5534.utils.text.ChatFormatter;
 import io.github.agus5534.utils.text.TranslatableText;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
@@ -22,7 +22,7 @@ public class TeamCommands implements CommandClass {
     public void saveArgument(@Sender Player sender) {
         var s = BambooFighters.instance.saveTeams();
 
-        sender.sendMessage(ComponentManager.formatMiniMessage(String.format("<green>Se han guardado los Teams en la carpeta <gold>teams/%s/", s)));
+        sender.sendMessage(ChatFormatter.formatMiniMessage(String.format("<green>Se han guardado los Teams en la carpeta <gold>teams/%s/", s)));
     }
 
     @Command(names = "create")
