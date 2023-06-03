@@ -43,20 +43,18 @@ public class FileCreator {
         return name;
     }
 
-    public List<FileCreator> getContents() {
-        var l = new ArrayList<FileCreator>();
+    public List<File> getContents() {
+        var l = new ArrayList<File>();
 
-        Arrays.stream(this.file.listFiles()).forEach(f -> {
-            l.add(new FileCreator(f, f.getName()));
-        });
+        Arrays.stream(this.file.listFiles()).forEach(f -> l.add(f));
 
         return l;
     }
 
-    public List<FileCreator> getContents(String extension) {
-        var l = new ArrayList<FileCreator>();
+    public List<File> getContents(String extension) {
+        var l = new ArrayList<File>();
 
-        Arrays.stream(this.file.listFiles()).filter(f -> f.getName().endsWith(extension)).forEach(f -> l.add(new FileCreator(f, f.getName())));
+        Arrays.stream(this.file.listFiles()).filter(f -> f.getName().endsWith(extension)).forEach(f -> l.add(f));
 
         return l;
     }
@@ -73,8 +71,8 @@ public class FileCreator {
         return f;
     }
 
-    public FileCreator getFile(String name) {
-        FileCreator f = null;
+    public File getFile(String name) {
+        File f = null;
 
         for (var file : getContents()) {
             if(file.getName().equalsIgnoreCase(name)) {

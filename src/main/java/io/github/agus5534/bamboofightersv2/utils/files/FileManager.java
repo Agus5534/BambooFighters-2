@@ -7,7 +7,7 @@ import java.io.*;
 
 public class FileManager {
 
-    public static FileCreator ArenasDir = new FileCreator(BambooFighters.instance.getDataFolder(), "/arenas/");
+    public static FileCreator ArenasDir = new FileCreator(BambooFighters.instance.getDataFolder(), File.separator + "/arenas/");
     public static JsonFile Combat = new JsonFile(getFile("combat.json"));
     public static JsonFile Config = new JsonFile(getFile("config.json"));
 

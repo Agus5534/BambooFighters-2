@@ -1,5 +1,6 @@
 package io.github.agus5534.bamboofightersv2;
 
+import io.github.agus5534.bamboofightersv2.arenas.ArenaReader;
 import io.github.agus5534.bamboofightersv2.arenas.GameArenaManager;
 import io.github.agus5534.bamboofightersv2.classes.GameClass;
 import io.github.agus5534.bamboofightersv2.classes.list.*;
@@ -51,6 +52,7 @@ public final class BambooFighters extends JavaPlugin {
     public static List<String> convertedLocations = new ArrayList<>();
 
     private MenuInventoryWrapperImpl MenuInventoryWrapperImpl;
+    private ArenaReader arenaReader;
 
     public static final Component tabHeader = TranslatableText.basicTranslate("game.player_list_title");
 
@@ -60,6 +62,7 @@ public final class BambooFighters extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        arenaReader = new ArenaReader();
 
         playerGameTeamHashMap = new HashMap<>();
         gameTeams = new ArrayList<>();
@@ -194,5 +197,9 @@ public final class BambooFighters extends JavaPlugin {
     public void loadTeams(String savedDate) throws Exception {
         gameTeams = FileManager.loadObjectFile(String.format("teams/%s/teams.bin", savedDate));
         playerGameTeamHashMap = FileManager.loadObjectFile(String.format("teams/%s/player_teams.bin", savedDate));
+    }
+
+    public ArenaReader arenaReader() {
+        return arenaReader;
     }
 }

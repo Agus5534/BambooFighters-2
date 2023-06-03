@@ -1,6 +1,6 @@
 package io.github.agus5534.bamboofightersv2.arenas;
 
-import io.github.agus5534.bamboofightersv2.exceptions.GameArenaCreationException;
+import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.utils.files.FileCreator;
 import io.github.agus5534.bamboofightersv2.utils.files.FileManager;
 
@@ -23,12 +23,12 @@ public class GameArenaManager {
         arenas.clear();
         GameArenaManager.lobby = null;
 
-        ArenaReader arenaReader = new ArenaReader();
+        var arenaReader = BambooFighters.instance.arenaReader();
 
         arenas.addAll(arenaReader.getArenas());
 
         if(GameArenaManager.lobby == null) {
-            throw new GameArenaCreationException("Missing Lobby Arena", new Throwable("Missing Lobby Arena"));
+           // throw new GameArenaCreationException("Missing Lobby Arena", new Throwable("Missing Lobby Arena"));
         }
     }
 
