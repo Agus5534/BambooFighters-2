@@ -31,7 +31,7 @@ public class ArenaReader {
 
     public GameArena createArena(String fileName) {
         var file = new FileCreator(FileManager.ArenasDir.getFile(), fileName+".json");
-        var arena = new GameArena(null, null, null, null, null, null, file.getFile());
+        var arena = new GameArena(null, null, null, null, null, null, null,file.getFile());
 
         String jsonString = """
                 {
@@ -135,6 +135,7 @@ public class ArenaReader {
                 squaredRegion,
                 arenaName,
                 material,
+                null,
                 f
         );
 

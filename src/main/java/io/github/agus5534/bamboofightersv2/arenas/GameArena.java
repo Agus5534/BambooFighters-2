@@ -1,11 +1,13 @@
 package io.github.agus5534.bamboofightersv2.arenas;
 
+import io.github.agus5534.bamboofightersv2.utils.animation.Animation;
 import io.github.agus5534.bamboofightersv2.utils.location.Region;
 import io.github.agus5534.bamboofightersv2.utils.location.SquaredRegion;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
+import javax.annotation.Nullable;
 import java.io.File;
 
 @SuppressWarnings("ConstantConditions")
@@ -16,15 +18,17 @@ public class GameArena {
     private Material arenaIcon;
     private SquaredRegion squaredRegion;
     private boolean nameTranslation;
+    private Animation animation;
     private final File file;
 
-    public GameArena(Region team1Region, Region team2Region, Location centerLoc, SquaredRegion squaredRegion, Component arenaName, Material arenaIcon, File file) {
+    public GameArena(Region team1Region, Region team2Region, Location centerLoc, SquaredRegion squaredRegion, Component arenaName, Material arenaIcon, @Nullable Animation animation, File file) {
         this.team1Region = team1Region;
         this.team2Region = team2Region;
         this.centerLoc = centerLoc;
         this.squaredRegion = squaredRegion;
         this.arenaName = arenaName;
         this.arenaIcon = arenaIcon;
+        this.animation = animation;
         this.file = file;
         this.nameTranslation = false;
     }
@@ -50,6 +54,10 @@ public class GameArena {
     }
     public Component getArenaName() {
         return arenaName;
+    }
+
+    public Animation getAnimation() {
+        return animation;
     }
 
     public void setArenaName(Component arenaName) {

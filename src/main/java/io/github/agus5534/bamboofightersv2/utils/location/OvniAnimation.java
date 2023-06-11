@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+@Deprecated(forRemoval = true)
 public class OvniAnimation implements Listener {
     int taskID = 0;
     private final Player pl;
