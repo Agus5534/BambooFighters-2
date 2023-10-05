@@ -1,5 +1,7 @@
 package io.github.agus5534.bamboofightersv2;
 
+import io.github.agus5534.agusutils.utils.scoreboard.MainScoreboard;
+import io.github.agus5534.agusutils.utils.text.TranslatableText;
 import io.github.agus5534.bamboofightersv2.arenas.ArenaReader;
 import io.github.agus5534.bamboofightersv2.arenas.GameArenaManager;
 import io.github.agus5534.bamboofightersv2.classes.GameClass;
@@ -17,8 +19,6 @@ import io.github.agus5534.bamboofightersv2.team.PlayerSelection;
 import io.github.agus5534.bamboofightersv2.utils.extra.ResourcePackUpdateChecker;
 import io.github.agus5534.bamboofightersv2.utils.files.FileManager;
 import io.github.agus5534.bamboofightersv2.utils.item.InteractionManager;
-import io.github.agus5534.utils.scoreboard.MainScoreboard;
-import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -27,7 +27,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import team.unnamed.gui.menu.listener.InventoryClickListener;
 import team.unnamed.gui.menu.listener.InventoryOpenListener;
-import team.unnamed.gui.menu.v1_19_R1.MenuInventoryWrapperImpl;
+import team.unnamed.gui.menu.v1_20_R1.MenuInventoryWrapperImpl;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -51,7 +51,7 @@ public final class BambooFighters extends JavaPlugin {
 
     public static List<String> convertedLocations = new ArrayList<>();
 
-    private MenuInventoryWrapperImpl MenuInventoryWrapperImpl;
+    private MenuInventoryWrapperImpl menuInventoryWrapper;
     private ArenaReader arenaReader;
 
     public static final Component tabHeader = TranslatableText.basicTranslate("game.player_list_title");
@@ -67,8 +67,6 @@ public final class BambooFighters extends JavaPlugin {
         playerGameTeamHashMap = new HashMap<>();
         gameTeams = new ArrayList<>();
         savedTeamDates = new ArrayList<>();
-
-        new MainScoreboard();
 
         registerListeners(
                 new InventoryClickListener(),

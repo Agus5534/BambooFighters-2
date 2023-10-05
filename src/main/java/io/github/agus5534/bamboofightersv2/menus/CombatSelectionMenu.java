@@ -1,13 +1,13 @@
 package io.github.agus5534.bamboofightersv2.menus;
 
+import io.github.agus5534.agusutils.utils.text.ChatFormatter;
+import io.github.agus5534.agusutils.utils.text.TranslatableText;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.arenas.GameArena;
 import io.github.agus5534.bamboofightersv2.arenas.GameArenaManager;
 import io.github.agus5534.bamboofightersv2.game.GameCombat;
 import io.github.agus5534.bamboofightersv2.team.GameTeam;
 import io.github.agus5534.bamboofightersv2.utils.item.ItemBuilder;
-import io.github.agus5534.utils.text.ChatFormatter;
-import io.github.agus5534.utils.text.TranslatableText;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,6 +21,7 @@ import team.unnamed.gui.menu.type.MenuInventory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CombatSelectionMenu {
     private final BambooFighters plugin;
@@ -66,7 +67,7 @@ public class CombatSelectionMenu {
                 .previousPageItem(p -> ItemClickable.onlyItem(new ItemBuilder(Material.GOLD_INGOT).setDisplayName(ChatColor.translateAlternateColorCodes('&',"Anterior Página")).build()))
                 .itemIfNoNextPage(ItemClickable.onlyItem(borderItem))
                 .itemIfNoPreviousPage(ItemClickable.onlyItem(borderItem))
-                .entities(GameArenaManager.arenas)
+                .entities(GameArenaManager.arenas.stream().filter(a -> !GameArenaManager.uncompleteArenas.contains(a)).collect(Collectors.toList()))
                 .bounds(10, 44)
                 .itemsPerRow(7)
                 .introduceItems(false)

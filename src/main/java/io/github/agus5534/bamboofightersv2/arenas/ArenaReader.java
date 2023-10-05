@@ -2,13 +2,13 @@ package io.github.agus5534.bamboofightersv2.arenas;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.github.agus5534.agusutils.utils.text.TranslatableText;
 import io.github.agus5534.bamboofightersv2.utils.files.FileCreator;
 import io.github.agus5534.bamboofightersv2.utils.files.FileManager;
 import io.github.agus5534.bamboofightersv2.utils.files.utils.JsonFile;
 import io.github.agus5534.bamboofightersv2.utils.location.LocationUtil;
 import io.github.agus5534.bamboofightersv2.utils.location.Region;
 import io.github.agus5534.bamboofightersv2.utils.location.SquaredRegion;
-import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;

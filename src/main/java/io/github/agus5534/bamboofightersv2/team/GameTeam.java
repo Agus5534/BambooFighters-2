@@ -1,8 +1,8 @@
 package io.github.agus5534.bamboofightersv2.team;
 
+import io.github.agus5534.agusutils.utils.text.TranslatableText;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.classes.GameClass;
-import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;

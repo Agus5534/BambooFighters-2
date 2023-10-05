@@ -1,10 +1,10 @@
 package io.github.agus5534.bamboofightersv2.menus;
 
+import io.github.agus5534.agusutils.utils.scoreboard.MainScoreboard;
+import io.github.agus5534.agusutils.utils.text.ChatFormatter;
+import io.github.agus5534.agusutils.utils.text.MiniColor;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.utils.item.ItemBuilder;
-import io.github.agus5534.utils.scoreboard.MainScoreboard;
-import io.github.agus5534.utils.text.ChatFormatter;
-import io.github.agus5534.utils.text.MiniColor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

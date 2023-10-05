@@ -1,7 +1,7 @@
 name: BambooFighters2
 version: '${version}'
 main: io.github.agus5534.bamboofightersv2.BambooFighters
-api-version: 1.19
+api-version: 1.20
 prefix: BF
 authors: [ Agus5534 ]
 description: Plugin para BambooFighters 2

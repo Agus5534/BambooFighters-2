@@ -1,7 +1,7 @@
 package io.github.agus5534.bamboofightersv2.utils.extra;
 
+import io.github.agus5534.agusutils.utils.text.ChatFormatter;
 import io.github.agus5534.bamboofightersv2.utils.files.utils.PropertyFile;
-import io.github.agus5534.utils.text.ChatFormatter;
 import org.bukkit.Bukkit;
 
 import java.io.File;

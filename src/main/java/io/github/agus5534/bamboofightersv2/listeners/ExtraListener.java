@@ -1,7 +1,7 @@
 package io.github.agus5534.bamboofightersv2.listeners;
 
+import io.github.agus5534.agusutils.utils.text.TranslatableText;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
-import io.github.agus5534.utils.text.TranslatableText;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;

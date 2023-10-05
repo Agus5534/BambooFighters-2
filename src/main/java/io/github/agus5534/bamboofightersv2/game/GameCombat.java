@@ -1,5 +1,7 @@
 package io.github.agus5534.bamboofightersv2.game;
 
+import io.github.agus5534.agusutils.utils.text.ChatFormatter;
+import io.github.agus5534.agusutils.utils.text.TranslatableText;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.arenas.GameArena;
 import io.github.agus5534.bamboofightersv2.arenas.GameArenaManager;
@@ -9,8 +11,6 @@ import io.github.agus5534.bamboofightersv2.utils.extra.TimeFormatter;
 import io.github.agus5534.bamboofightersv2.utils.extra.Validate;
 import io.github.agus5534.bamboofightersv2.utils.files.FileManager;
 import io.github.agus5534.bamboofightersv2.utils.files.utils.JsonFile;
-import io.github.agus5534.utils.text.ChatFormatter;
-import io.github.agus5534.utils.text.TranslatableText;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.*;

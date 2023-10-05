@@ -1,9 +1,9 @@
 package io.github.agus5534.bamboofightersv2.team;
 
+import io.github.agus5534.agusutils.utils.scoreboard.MainScoreboard;
+import io.github.agus5534.agusutils.utils.text.TranslatableText;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.menus.TeamSelectionMenu;
-import io.github.agus5534.utils.scoreboard.MainScoreboard;
-import io.github.agus5534.utils.text.TranslatableText;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

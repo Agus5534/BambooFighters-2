@@ -1,7 +1,7 @@
 package io.github.agus5534.bamboofightersv2.utils.item;
 
+import io.github.agus5534.agusutils.utils.text.ChatFormatter;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
-import io.github.agus5534.utils.text.ChatFormatter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

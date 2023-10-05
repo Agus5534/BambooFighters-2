@@ -1,10 +1,10 @@
 package io.github.agus5534.bamboofightersv2.commands.list;
 
+import io.github.agus5534.agusutils.utils.text.ChatFormatter;
+import io.github.agus5534.agusutils.utils.text.TranslatableText;
 import io.github.agus5534.bamboofightersv2.BambooFighters;
 import io.github.agus5534.bamboofightersv2.team.GameTeam;
 import io.github.agus5534.bamboofightersv2.utils.extra.Validate;
-import io.github.agus5534.utils.text.ChatFormatter;
-import io.github.agus5534.utils.text.TranslatableText;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.annotated.annotation.Named;

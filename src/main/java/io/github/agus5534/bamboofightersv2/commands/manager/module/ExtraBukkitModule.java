@@ -1,6 +1,6 @@
 package io.github.agus5534.bamboofightersv2.commands.manager.module;
 
-import io.github.agus5534.annotations.arguments.Factory;
+import io.github.agus5534.agusutils.annotations.arguments.Factory;
 import me.fixeddev.commandflow.annotated.part.AbstractModule;
 import me.fixeddev.commandflow.annotated.part.PartFactory;
 import org.bukkit.Bukkit;

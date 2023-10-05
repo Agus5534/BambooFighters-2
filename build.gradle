@@ -29,16 +29,16 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT'
-    implementation("team.unnamed:gui-menu-api:3.3.2")
-    implementation 'team.unnamed:gui-item-api:3.3.2'
-    implementation 'team.unnamed:gui-item-skull-api:3.3.2'
-    implementation 'team.unnamed:gui-menu-adapt-v1_19_R1:3.3.2:dev'
+    compileOnly 'io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT'
+    implementation("team.unnamed:gui-menu-api:3.4.1-SNAPSHOT")
+    implementation 'team.unnamed:gui-item-api:3.4.1-SNAPSHOT'
+    implementation 'team.unnamed:gui-item-skull-api:3.4.1-SNAPSHOT'
+    implementation 'team.unnamed:gui-menu-adapt-v1_20_R1:3.4.1-SNAPSHOT'
     implementation 'me.fixeddev:commandflow-bukkit:0.5.2'
     implementation 'org.reflections:reflections:0.10.2'
 
-    implementation 'io.github.agus5534:AgusUtils:2.0'
-    annotationProcessor 'io.github.agus5534:AgusUtils:2.0'
+    implementation 'io.github.agus5534:AgusUtils:2.1'
+    annotationProcessor 'io.github.agus5534:AgusUtils:2.1'
 }
 
 def targetJavaVersion = 17
@@ -63,6 +63,19 @@ processResources {
     filteringCharset 'UTF-8'
     filesMatching('plugin.yml') {
         expand props
+    }
+}
+
+tasks.register('createDebugJar') {
+    dependsOn tasks.shadowJar
+
+    doFirst {
+        shadowJar
+
+        copy {
+            from 'C:\\Users\\User\\IdeaProjects\\BambooFighters2\\build\\libs\\bamboofightersv2-1.1.0-SNAPSHOT.2-all.jar'
+            into 'C:\\Users\\User\\OneDrive\\Escritorio\\MC Servers\\1.20.1\\plugins\\'
+        }
     }
 }
 
